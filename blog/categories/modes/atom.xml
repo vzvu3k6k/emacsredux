@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Modes | Emacs Redux]]></title>
+  <link href="http://emacsredux.com/blog/categories/modes/atom.xml" rel="self"/>
+  <link href="http://emacsredux.com/"/>
+  <updated>2013-09-25T12:43:39+03:00</updated>
+  <id>http://emacsredux.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Removing key bindings from minor mode keymaps]]></title>
+    <link href="http://emacsredux.com/blog/2013/09/25/removing-key-bindings-from-minor-mode-keymaps/"/>
+    <updated>2013-09-25T12:26:00+03:00</updated>
+    <id>http://emacsredux.com/blog/2013/09/25/removing-key-bindings-from-minor-mode-keymaps</id>
+    <content type="html"><![CDATA[<p>Often minor modes don't respect standard keybinding conventions and use some user reserved keys (like <code>C-c a</code>). Occasionally two minor modes would have conflicting keybindings or a minor mode would keybindings conflicting with a major mode. I guess you can imagine similar problems. Dealing with them is fairly straight-forward - we have to either unbind or rebind the offending binding:</p>
+
+<p>``` cl
+;; remove keybinding
+(define-key minor-mode-map (kbd "C-c c") nil)</p>
+
+<p>;; change keybinding
+(define-key minor-mode-map (kbd "C-c c") (kbd "C-c C-c"))
+```</p>
+
+<p>Generally speaking you can use <code>define-key</code> to alter the keymap of a major mode as well, but those are rarely offenders when it comes to picking appropriate keybindings for their keymaps.</p>
+
+<p>Normally you'd want to invoke the above code right after the related minor (or major) mode is loaded:</p>
+
+<p><code>cl
+(eval-after-load "minor-mode"
+  '(define-key minor-mode-map (kbd "C-c c") nil))
+</code></p>
+
+<p>I'm not sure if one can have a minor mode having different keymaps in different major modes. I can certainly imagine situations when this would be useful. If someone knows how this could be done - please, share this knowledge in the comments.</p>
+]]></content>
+  </entry>
+  
+</feed>
