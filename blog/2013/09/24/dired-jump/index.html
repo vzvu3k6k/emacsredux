@@ -9,7 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Most Emacs users know that they can start dired (Emacs&#8217;s file browser) with M-x dired or C-x d. That would display a prompt in the minibuffer &hellip;">
+  <meta name="description" content="Most Emacs users know that they can start dired (Emacs&#8217;s file
+browser) with M-x dired or C-x d. That would display a prompt in
+the minibuffer &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -107,16 +109,26 @@
   </header>
 
 
-<div class="entry-content"><p>Most Emacs users know that they can start <code>dired</code> (Emacs&#8217;s file browser) with <code>M-x dired</code> or <code>C-x d</code>. That would display a prompt in the minibuffer asking which directory to open with <code>dired</code> (the current directory will be suggested as a default).</p>
+<div class="entry-content"><p>Most Emacs users know that they can start <code>dired</code> (Emacs&#8217;s file
+browser) with <code>M-x dired</code> or <code>C-x d</code>. That would display a prompt in
+the minibuffer asking which directory to open with <code>dired</code> (the
+current directory will be suggested as a default).</p>
 
-<p>More often than not you&#8217;ll probably want <code>dired</code> to display the directory of file you&#8217;re currently editing. You might even want to have the cursor positioned over that very same file in the <code>dired</code> buffer. There&#8217;s a cool command that does exactly that - <code>dired-jump</code>. To use it you have to first load the built-in library <code>dired-x</code>:</p>
+<p>More often than not you&#8217;ll probably want <code>dired</code> to display the
+directory of file you&#8217;re currently editing. You might even want to
+have the cursor positioned over that very same file in the <code>dired</code>
+buffer. There&#8217;s a cool command that does exactly that -
+<code>dired-jump</code>. To use it you have to first load the built-in library
+<code>dired-x</code>:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;dired-x</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>You can run the command with <code>C-x C-j</code> (<code>M-x dired-jump</code>). No prompts, no wasted time. You&#8217;re instantly teleported to the currently edited file&#8217;s position in a <code>dired</code> buffer.</p>
+<p>You can run the command with <code>C-x C-j</code> (<code>M-x dired-jump</code>). No prompts,
+no wasted time. You&#8217;re instantly teleported to the currently edited
+file&#8217;s position in a <code>dired</code> buffer.</p>
 
 <p>This command works out-of-the-box in
 <a href="https://github.com/bbatsov/prelude">Prelude</a>.</p>
@@ -170,7 +182,7 @@
         <a class="basic-alignment left" href="/blog/2013/09/05/a-proper-replacement-for-flet/" title="Previous Post: A proper replacement for flet">&laquo; A proper replacement for flet</a>
       
       
-        <a class="basic-alignment right" href="/blog/2013/09/25/removing-key-bindings-from-minor-mode-keymaps/" title="Next Post: Removing key bindings from minor mode keymaps">Removing key bindings from minor mode keymaps &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2013/09/25/removing-key-bindings-from-minor-mode-keymaps/" title="Next Post: Removing/Altering key bindings from minor mode keymaps">Removing/Altering key bindings from minor mode keymaps &raquo;</a>
       
     </p>
   </footer>
@@ -191,7 +203,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/09/25/removing-key-bindings-from-minor-mode-keymaps/">Removing key bindings from minor mode keymaps</a>
+        <a href="/blog/2013/09/25/removing-key-bindings-from-minor-mode-keymaps/">Removing/Altering key bindings from minor mode keymaps</a>
       </li>
     
       <li class="post">

@@ -5,11 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Removing key bindings from minor mode keymaps - Emacs Redux</title>
+  <title>Removing/Altering key bindings from minor mode keymaps - Emacs Redux</title>
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Often minor modes don&#8217;t respect standard keybinding conventions and use some user reserved keys (like C-c a). Occasionally two minor modes &hellip;">
+  <meta name="description" content="Often minor modes don&#8217;t respect standard keybinding conventions and
+use some user reserved keys (like C-c a). Occasionally two minor
+modes &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +84,7 @@
   
   <header>
     
-      <h1 class="entry-title">Removing Key Bindings From Minor Mode Keymaps</h1>
+      <h1 class="entry-title">Removing/Altering Key Bindings From Minor Mode Keymaps</h1>
     
     
       <p class="meta">
@@ -107,7 +109,12 @@
   </header>
 
 
-<div class="entry-content"><p>Often minor modes don&#8217;t respect standard keybinding conventions and use some user reserved keys (like <code>C-c a</code>). Occasionally two minor modes would have conflicting keybindings or a minor mode would keybindings conflicting with a major mode. I guess you can imagine similar problems. Dealing with them is fairly straight-forward - we have to either unbind or rebind the offending binding:</p>
+<div class="entry-content"><p>Often minor modes don&#8217;t respect standard keybinding conventions and
+use some user reserved keys (like <code>C-c a</code>). Occasionally two minor
+modes would have conflicting keybindings or a minor mode would
+keybindings conflicting with a major mode. I guess you can imagine
+similar problems. Dealing with them is fairly straight-forward - we
+have to either unbind or rebind the offending binding:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -122,9 +129,12 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Generally speaking you can use <code>define-key</code> to alter the keymap of a major mode as well, but those are rarely offenders when it comes to picking appropriate keybindings for their keymaps.</p>
+<p>Generally speaking you can use <code>define-key</code> to alter the keymap of a
+major mode as well, but those are rarely offenders when it comes to
+picking appropriate keybindings for their keymaps.</p>
 
-<p>Normally you&#8217;d want to invoke the above code right after the related minor (or major) mode is loaded:</p>
+<p>Normally you&#8217;d want to invoke the above code right after the related
+minor (or major) mode is loaded:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -133,7 +143,35 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>I&#8217;m not sure if one can have a minor mode having different keymaps in different major modes. I can certainly imagine situations when this would be useful. If someone knows how this could be done - please, share this knowledge in the comments.</p>
+<p>Making a minor mode have different keymaps in different major modes is
+tricky, but possible. Here&#8217;s an example that disables some keybindings
+in the minor <code>prelude-mode</code>, that are conflicting with the major
+<code>org-mode</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">my-org-mode-hook</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">oldmap</span> <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">assoc</span> <span class="ss">&#39;prelude-mode</span> <span class="nv">minor-mode-map-alist</span><span class="p">)))</span>
+</span><span class='line'>        <span class="p">(</span><span class="nv">newmap</span> <span class="p">(</span><span class="nv">make-sparse-keymap</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">set-keymap-parent</span> <span class="nv">newmap</span> <span class="nv">oldmap</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">define-key</span> <span class="nv">newmap</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c +&quot;</span><span class="p">)</span> <span class="no">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">define-key</span> <span class="nv">newmap</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c -&quot;</span><span class="p">)</span> <span class="no">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">make-local-variable</span> <span class="ss">&#39;minor-mode-overriding-map-alist</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">push</span> <span class="o">`</span><span class="p">(</span><span class="nv">prelude-mode</span> <span class="o">.</span> <span class="o">,</span><span class="nv">newmap</span><span class="p">)</span> <span class="nv">minor-mode-overriding-map-alist</span><span class="p">))</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;org-mode-hook</span> <span class="ss">&#39;my-org-mode-hook</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
@@ -203,7 +241,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/09/25/removing-key-bindings-from-minor-mode-keymaps/">Removing key bindings from minor mode keymaps</a>
+        <a href="/blog/2013/09/25/removing-key-bindings-from-minor-mode-keymaps/">Removing/Altering key bindings from minor mode keymaps</a>
       </li>
     
       <li class="post">
