@@ -4,7 +4,7 @@
   <title><![CDATA[Emacs Redux]]></title>
   <link href="http://emacsredux.com/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2013-09-27T11:58:09+03:00</updated>
+  <updated>2013-09-27T12:04:28+03:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Instant access your shell init file]]></title>
-    <link href="http://emacsredux.com/blog/2013/09/27/instant-access-your-shell-init-file/"/>
+    <title type="html"><![CDATA[Instant access to your shell init file]]></title>
+    <link href="http://emacsredux.com/blog/2013/09/27/instant-access-to-your-shell-init-file/"/>
     <updated>2013-09-27T11:48:00+03:00</updated>
-    <id>http://emacsredux.com/blog/2013/09/27/instant-access-your-shell-init-file</id>
+    <id>http://emacsredux.com/blog/2013/09/27/instant-access-to-your-shell-init-file</id>
     <content type="html"><![CDATA[<p>A while ago I showed you a way to <a href="http://emacsredux.com/blog/2013/05/18/instant-access-to-init-dot-el/">instantly edit your Emacs init file</a>. Today
 we&#8217;ll adapt the original idea for shell init files like <code>.bashrc</code> and <code>.zshrc</code>. The code required is fairly short and simple:</p>
 
