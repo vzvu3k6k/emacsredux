@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Editing | Emacs Redux]]></title>
   <link href="http://emacsredux.com/blog/categories/editing/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2013-10-01T18:31:33+03:00</updated>
+  <updated>2013-11-01T16:50:33+02:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -12,6 +12,41 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Highlight matching delimiters with smartparens]]></title>
+    <link href="http://emacsredux.com/blog/2013/11/01/highlight-matching-delimiters-with-smartparens/"/>
+    <updated>2013-11-01T16:32:00+02:00</updated>
+    <id>http://emacsredux.com/blog/2013/11/01/highlight-matching-delimiters-with-smartparens</id>
+    <content type="html"><![CDATA[<p>Some time ago I wrote about
+<a href="http://emacsredux.com/blog/2013/04/01/highlight-matching-parentheses/">highlighting matching parentheses</a>
+with <code>show-paren-mode</code>. This is definitely useful, but it's kind of
+restrictive, since parentheses are just a specific kind of paired
+delimiter. Single and double quotes are also paired delimiters (at
+least in most programmming languages). In the Ruby programmming
+language, for instance, <code>do</code> and <code>end</code> also constitute paired
+delimiter.</p>
+
+<p><a href="https://github.com/Fuco1/smartparens">smartparens</a> offers
+extremely customizable handling of paired delimiters and comes with an
+extra minor mode called <code>show-smartparens-mode</code> to highlight
+them. This mode totally replaces <code>show-paren-mode</code> and language
+specific modes like <code>hirb</code> (which highlights Ruby blocks).</p>
+
+<p>Assuming you're already using <code>smartparens</code>, enabling <code>show-smartparens-mode</code> is trivial:</p>
+
+<p><code>cl
+(show-smartparens-global-mode +1)
+</code></p>
+
+<p>Here's a glimpse of it in action:</p>
+
+<p><img src="/images/articles/show-smartparens-mode.gif"></p>
+
+<p>In <a href="https://github.com/bbatsov/prelude">Prelude</a> <code>show-paren-mode</code> was
+replaced by <code>show-smartparens-mode</code> some time ago.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Open line above]]></title>
@@ -263,41 +298,6 @@ This is a short example</p>
 <p><code>smarter-move-beginning-of-line</code> is part of <a href="https://github.com/bbatsov/prelude">Prelude</a>.</p>
 
 <p><strong>P.S.</strong> The credit for this tip goes to <a href="https://github.com/lunaryorn">Sebastian Wiesner</a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Delete whitespace around point]]></title>
-    <link href="http://emacsredux.com/blog/2013/05/19/delete-whitespace-around-point/"/>
-    <updated>2013-05-19T12:08:00+03:00</updated>
-    <id>http://emacsredux.com/blog/2013/05/19/delete-whitespace-around-point</id>
-    <content type="html"><![CDATA[<p>One task that often pops when editing text or code is the need to
-remove some extra whitespace around the point(the cursor). Emacs has your back!</p>
-
-<p>First, we have the command <code>delete-horizontal-space</code>(bound to <code>M-\</code>) -
-it deletes all spaces and tabs around the point. With a prefix
-argument(<code>C-u M-\</code>) the command deletes only the whitespace before the point.</p>
-
-<p>One similar, although a bit less known, command is
-<code>just-one-space</code>(bound to <code>M-SPC</code>) - it deletes all spaces and tabs
-around the point, leaving just one space (or <code>N</code> spaces if you supply <code>N</code> as a
-prefix argument like <code>C-4 M-SPC</code>). If <code>N</code> is negative, the command
-deletes newlines as well, leaving <code>-N</code> spaces.</p>
-
-<p>One minor snafu with <code>just-one-space</code> is that <code>M-SPC</code> is a no-go on
-OSX since just about everyone uses it for quick access to Spotlight or
-switching between languages. You might want to use a different
-keybinding like this one:</p>
-
-<p><code>cl
-(global-set-key (kbd "C-c j") 'just-one-space)
-</code></p>
-
-<p>Personally, of the two commands I find <code>just-one-space</code> the more useful.</p>
-
-<p>In <a href="https://github.com/bbatsov/prelude">Prelude</a> <code>just-one-space</code> is
-additionally bound to the <code>kk</code>
-<a href="/blog/2013/04/28/execute-commands-ninja-style-with-key-chord-mode/">keychord</a>.</p>
 ]]></content>
   </entry>
   
