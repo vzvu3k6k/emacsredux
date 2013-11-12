@@ -5,13 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Boost performance by leveraging byte-compilation - Emacs Redux</title>
+  <title>A crazy productivity boost: Remap Return to Control - Emacs Redux</title>
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Emacs&#8217;s Lisp interpreter is able to interpret two kinds of code:
-humanly readable code (stored in files with .el extension) and
-machine &hellip;">
+  <meta name="description" content="People have always complained about the awkward positioning of
+the two Control keys on modern keyboards. That&#8217;s a fact! Effective Emacs
+usage &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +20,7 @@ machine &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://emacsredux.com/blog/2013/06/25/boost-performance-by-leveraging-byte-compilation">
+  <link rel="canonical" href="http://emacsredux.com/blog/2013/11/12/a-crazy-productivity-boost-remap-return-to-control">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Emacs Redux" type="application/atom+xml">
@@ -84,7 +84,7 @@ machine &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Boost Performance by Leveraging Byte-compilation</h1>
+      <h1 class="entry-title">A Crazy Productivity Boost: Remap Return to Control</h1>
     
     
       <p class="meta">
@@ -100,7 +100,7 @@ machine &hellip;">
   
 
 
-<time datetime="2013-06-25T12:49:00+03:00" pubdate data-updated="true">Jun 25<span>th</span>, 2013</time>
+<time datetime="2013-11-12T17:09:00+02:00" pubdate data-updated="true">Nov 12<span>th</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -109,90 +109,47 @@ machine &hellip;">
   </header>
 
 
-<div class="entry-content"><p>Emacs&#8217;s Lisp interpreter is able to interpret two kinds of code:
-humanly readable code (stored in files with <code>.el</code> extension) and
-machine optimized code (called <code>byte-compiled code</code>), which is not
-humanly readable. Byte-compiled code runs faster than humanly readable
-code. Java or .NET developers should already be familiar with the
-concept of byte-code, since it&#8217;s pretty central on those platforms.</p>
+<div class="entry-content"><p>People have always complained about the awkward positioning of
+the two <code>Control</code> keys on modern keyboards. That&#8217;s a fact! Effective Emacs
+usage is heavily dependent on the <code>Control</code> keys (yep, both of
+them). That&#8217;s also a fact!</p>
 
-<p>You can transform humanly readable code into byte-compiled code by
-running one of the compile commands such as <code>byte-compile-file</code>. The
-resulting byte-code is stored into <code>.elc</code> files. One can also
-byte-compile Emacs Lisp source files using Emacs in batch mode.</p>
+<p>A great many Emacs users remap the infrequently used <code>CapsLock</code> key to
+<code>Control</code> to alleviate partially the problem with the accessibility of
+the control keys. That, while useful, is not sufficient for the
+optimal typing experience, since that way you&#8217;re breaking the key
+symmetry on both sides of your keyboard. Also - your right pinky has
+to go much further than your left one, while you&#8217;re typing. Many
+people seem to be using only the left <code>Control</code> and I guess they&#8217;re
+not particularly bothered by this, but touch typists like me are
+generally quite bothered by such things.</p>
 
-<p>Here&#8217;s how you can compile everything in your <code>.emacs.d</code> folder:</p>
+<p>A much better idea would be to leverage a little knows capability of
+keyboard input systems and map the <code>Return</code> key to <code>Control</code> only
+when it&#8217;s held down (it will behave like a normal <code>Return</code> key in all
+other situations). This sounds a bit crazy, but please bear with me for a while.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>emacs -batch -f batch-byte-compile ~/.emacs.d/**/*.el</span></code></pre></td></tr></table></div></figure>
+<p>This radical approach has several advantages.  First and foremost -
+it&#8217;s much easier to hit <code>Return</code> with your right pinky than it is to
+hit the regular right <code>Control</code> (especially if you&#8217;re using a US
+layout keyboard - these have long single row <code>Return</code> keys, compared
+to the short 2 row Returns found on European keyboards). Second, if
+you&#8217;ve already remapped <code>CapsLock</code> to <code>Control</code> (like you should have
+done) you&#8217;re getting a pretty symmetrical mapping on the opposite side
+of your keyboard. Last, but not least - it&#8217;s a great option for people
+using compact keyboards with no left <code>Control</code> key.</p>
 
+<p>Obviously you&#8217;ll need some keyboard remapping software to make this
+trick work. OSX users can use
+<a href="http://pqrs.org/macosx/keyremap4macbook/">KeyRemap4MacBook</a> to do
+that.  In its settings look up the <code>Change Return</code> section and under
+it <code>Return to Control_R (+ When you type Return only, send
+Return)</code>. As far as I know this can be remapping can be done on GNU/Linux systems as
+well (though I haven&#8217;t check how), but I have no idea if it&#8217;s a viable option for Windows users.</p>
 
-<p>Of course we can easily create an Emacs command that does the same thing:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">byte-compile-init-dir</span> <span class="p">()</span>
-</span><span class='line'>  <span class="s">&quot;Byte-compile all your dotfiles.&quot;</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">byte-recompile-directory</span> <span class="nv">user-emacs-directory</span> <span class="mi">0</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>user-emacs-directory</code> is an Emacs variable that points to your init
-dir (usually <code>~/.emacs.d</code> on UNIX systems). This command will
-recompile even files that were already compiled before (meaning a file
-with the same name and the <code>.elc</code> extension instead of <code>.el</code>
-existed). You can try the new command with <code>M-x
-byte-compile-init-dir</code>.</p>
-
-<p>You have to keep in mind that Emacs will load code from the <code>.elc</code>
-files if present alongside the <code>.el</code> files, so you&#8217;ll have to take
-steps to ensure you don&#8217;t have stale <code>.elc</code> files lying around. I&#8217;d
-suggest the following solution:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">remove-elc-on-save</span> <span class="p">()</span>
-</span><span class='line'>  <span class="s">&quot;If you&#39;re saving an elisp file, likely the .elc is no longer valid.&quot;</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;after-save-hook</span>
-</span><span class='line'>            <span class="p">(</span><span class="k">lambda</span> <span class="p">()</span>
-</span><span class='line'>              <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nv">file-exists-p</span> <span class="p">(</span><span class="nv">concat</span> <span class="nv">buffer-file-name</span> <span class="s">&quot;c&quot;</span><span class="p">))</span>
-</span><span class='line'>                  <span class="p">(</span><span class="nb">delete-file</span> <span class="p">(</span><span class="nv">concat</span> <span class="nv">buffer-file-name</span> <span class="s">&quot;c&quot;</span><span class="p">))))</span>
-</span><span class='line'>            <span class="no">nil</span>
-</span><span class='line'>            <span class="no">t</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;emacs-lisp-mode-hook</span> <span class="ss">&#39;remove-elc-on-save</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This code will make Emacs delete the <code>some_file.elc</code> file, every time the
-<code>some_file.el</code> file in the same folder is saved.</p>
-
-<p>A couple of closing notes:</p>
-
-<ul>
-<li><p>If you don&#8217;t have any custom computationally
-intensive <code>defuns</code> in your init directory - it probably doesn&#8217;t make sense
-to byte-compile it.</p></li>
-<li><p>Packages installed via <code>package.el</code> will be automatically byte-compiled during the installation process.</p></li>
-</ul>
-
-
-<p>The code presented here is part of
-<a href="https://github.com/bbatsov/prelude">Prelude</a>. As a matter of fact
-Prelude will byte-compile itself during the installation process (if
-you used the installed script, that is). Prelude will also recompile
-itself when <code>M-x prelude-update</code> is invoked.</p>
+<p>All in all - remapping <code>Return</code> to <code>Control</code> should be a big
+productivity win for some (the touch typists) of you and should make
+your right pinky&#8217;s life easier.</p>
 </div>
 
 
@@ -215,12 +172,12 @@ itself when <code>M-x prelude-update</code> is invoked.</p>
   
 
 
-<time datetime="2013-06-25T12:49:00+03:00" pubdate data-updated="true">Jun 25<span>th</span>, 2013</time>
+<time datetime="2013-11-12T17:09:00+02:00" pubdate data-updated="true">Nov 12<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/utilities/'>Utilities</a>
+    <a class='category' href='/blog/categories/productivity/'>Productivity</a>
   
 </span>
 
@@ -229,7 +186,7 @@ itself when <code>M-x prelude-update</code> is invoked.</p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://emacsredux.com/blog/2013/06/25/boost-performance-by-leveraging-byte-compilation/" data-via="bbatsov" data-counturl="http://emacsredux.com/blog/2013/06/25/boost-performance-by-leveraging-byte-compilation/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://emacsredux.com/blog/2013/11/12/a-crazy-productivity-boost-remap-return-to-control/" data-via="bbatsov" data-counturl="http://emacsredux.com/blog/2013/11/12/a-crazy-productivity-boost-remap-return-to-control/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -240,10 +197,8 @@ itself when <code>M-x prelude-update</code> is invoked.</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/06/21/eval-and-replace/" title="Previous Post: Eval and Replace">&laquo; Eval and Replace</a>
+        <a class="basic-alignment left" href="/blog/2013/11/01/highlight-matching-delimiters-with-smartparens/" title="Previous Post: Highlight matching delimiters with smartparens">&laquo; Highlight matching delimiters with smartparens</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/07/05/locate/" title="Next Post: Locate">Locate &raquo;</a>
       
     </p>
   </footer>
@@ -343,8 +298,8 @@ itself when <code>M-x prelude-update</code> is invoked.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://emacsredux.com/blog/2013/06/25/boost-performance-by-leveraging-byte-compilation/';
-        var disqus_url = 'http://emacsredux.com/blog/2013/06/25/boost-performance-by-leveraging-byte-compilation/';
+        var disqus_identifier = 'http://emacsredux.com/blog/2013/11/12/a-crazy-productivity-boost-remap-return-to-control/';
+        var disqus_url = 'http://emacsredux.com/blog/2013/11/12/a-crazy-productivity-boost-remap-return-to-control/';
         var disqus_script = 'embed.js';
       
     (function () {
