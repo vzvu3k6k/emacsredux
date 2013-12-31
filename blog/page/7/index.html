@@ -9,9 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Sometimes I need to copy the name of the currently visited file to the
-clipboard. Emacs does not have a built-in command for that, but
-cooking one is &hellip;">
+  <meta name="description" content="Everyone who&#8217;s used Emacs for more than 10 minutes knows that you can
+indent the selected region in a buffer with C-M-\ (bound to the
+command &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,184 @@ cooking one is &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/27/indent-region-or-buffer/">Indent Region or Buffer</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-27T17:35:00+02:00" pubdate data-updated="true">Mar 27<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/03/27/indent-region-or-buffer/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Everyone who&#8217;s used Emacs for more than 10 minutes knows that you can
+indent the selected region in a buffer with <code>C-M-\</code> (bound to the
+command <code>indent-region</code>). While this is pretty useful I find that it&#8217;s
+more useful to have a command that indents the current region if
+present and the entire buffer otherwise.  Therefore I&#8217;ve devised the
+simple commands <code>indent-buffer</code> and <code>indent-region-or-buffer</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">indent-buffer</span> <span class="p">()</span>
+</span><span class='line'>  <span class="s">&quot;Indent the currently visited buffer.&quot;</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">indent-region</span> <span class="p">(</span><span class="nv">point-min</span><span class="p">)</span> <span class="p">(</span><span class="nv">point-max</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">indent-region-or-buffer</span> <span class="p">()</span>
+</span><span class='line'>  <span class="s">&quot;Indent a region if selected, otherwise the whole buffer.&quot;</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">save-excursion</span>
+</span><span class='line'>    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nv">region-active-p</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">(</span><span class="k">progn</span>
+</span><span class='line'>          <span class="p">(</span><span class="nv">indent-region</span> <span class="p">(</span><span class="nv">region-beginning</span><span class="p">)</span> <span class="p">(</span><span class="nv">region-end</span><span class="p">))</span>
+</span><span class='line'>          <span class="p">(</span><span class="nv">message</span> <span class="s">&quot;Indented selected region.&quot;</span><span class="p">))</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">progn</span>
+</span><span class='line'>        <span class="p">(</span><span class="nv">indent-buffer</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">(</span><span class="nv">message</span> <span class="s">&quot;Indented buffer.&quot;</span><span class="p">)))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now that you have <code>indent-region-or-buffer</code> you don&#8217;t actually need
+<code>indent-region</code> or <code>indent-buffer</code> that much (if at all). That&#8217;s why I
+typically bind <code>indent-region-or-buffer</code> to <code>C-M-\</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-M-\\&quot;</span><span class="p">)</span> <span class="ss">&#39;indent-region-or-buffer</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As usual both commands are available in
+<a href="https://github.com/bbatsov/prelude">Prelude</a>(but with <code>prelude-</code>
+prefices).</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/27/open-file-in-external-program/">Open File in External Program</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-27T12:44:00+02:00" pubdate data-updated="true">Mar 27<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/03/27/open-file-in-external-program/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Sometimes it&#8217;s useful to be able to open the file you&#8217;re editing in
+Emacs in an external program. For instance - you might be editing
+some HTML file and you might want to see how is it looking in a
+browser. I use the following handy command to do so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">prelude-open-with</span> <span class="p">(</span><span class="nv">arg</span><span class="p">)</span>
+</span><span class='line'>  <span class="s">&quot;Open visited file in default external program.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">With a prefix ARG always prompt for command to use.&quot;</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span> <span class="s">&quot;P&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">when</span> <span class="nv">buffer-file-name</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">shell-command</span> <span class="p">(</span><span class="nv">concat</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nb">cond</span>
+</span><span class='line'>                     <span class="p">((</span><span class="nb">and</span> <span class="p">(</span><span class="nb">not</span> <span class="nv">arg</span><span class="p">)</span> <span class="p">(</span><span class="nb">eq</span> <span class="nv">system-type</span> <span class="ss">&#39;darwin</span><span class="p">))</span> <span class="s">&quot;open&quot;</span><span class="p">)</span>
+</span><span class='line'>                     <span class="p">((</span><span class="nb">and</span> <span class="p">(</span><span class="nb">not</span> <span class="nv">arg</span><span class="p">)</span> <span class="p">(</span><span class="nb">member</span> <span class="nv">system-type</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">gnu</span> <span class="nv">gnu/linux</span> <span class="nv">gnu/kfreebsd</span><span class="p">)))</span> <span class="s">&quot;xdg-open&quot;</span><span class="p">)</span>
+</span><span class='line'>                     <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="nv">read-shell-command</span> <span class="s">&quot;Open current file with: &quot;</span><span class="p">)))</span>
+</span><span class='line'>                    <span class="s">&quot; &quot;</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nv">shell-quote-argument</span> <span class="nv">buffer-file-name</span><span class="p">)))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On OSX it will use the built-in <code>open</code> program to decide which program
+to open the file with. On Linux &amp; *BSD it will use <code>xdg-open</code>. On all
+other operating systems you&#8217;ll be prompted to enter the name of the
+program in the minibuffer (with autocompletion for the program name).
+With a prefix argument you&#8217;ll always be prompted for the name of the program to use.</p>
+
+<p>I find it convenient to bind the command to <code>C-c o</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c o&quot;</span><span class="p">)</span> <span class="ss">&#39;open-with</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This command is naturally part of
+<a href="https://github.com/bbatsov/prelude">Prelude</a>(but is named
+<code>prelude-open-with</code>).</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -480,6 +658,14 @@ that I&#8217;ve uncovered many interesting things to share with you.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/12/31/a-peek-at-emacs-24-dot-4-smarter-show-paren-mode/">A peek at Emacs 24.4: Smarter show-paren-mode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/12/31/a-peek-at-emacs-24-dot-4/">A peek at Emacs 24.4</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/11/12/a-crazy-productivity-boost-remap-return-to-control/">A crazy productivity boost: Remap Return to Control</a>
       </li>
     
@@ -489,14 +675,6 @@ that I&#8217;ve uncovered many interesting things to share with you.</p>
     
       <li class="post">
         <a href="/blog/2013/09/27/instant-access-to-your-shell-init-file/">Instant access to your shell init file</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/09/25/removing-key-bindings-from-minor-mode-keymaps/">Removing/Altering key bindings from minor mode keymaps</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/09/24/dired-jump/">Dired Jump</a>
       </li>
     
   </ul>

@@ -287,16 +287,26 @@
         <lastmod>2013-11-12T18:13:35+02:00</lastmod>
     </url>
     <url>
+        <loc>http://emacsredux.com/blog/2013/12/31/a-peek-at-emacs-24-dot-4/</loc>
+        <lastmod>2013-12-31T14:17:18+02:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://emacsredux.com/blog/2013/12/31/a-peek-at-emacs-24-dot-4-smarter-show-paren-mode/
+        </loc>
+        <lastmod>2013-12-31T14:14:46+02:00</lastmod>
+    </url>
+    <url>
         <loc>http://emacsredux.com/about/</loc>
         <lastmod>2013-09-24T18:48:11+03:00</lastmod>
     </url>
     <url>
         <loc>http://emacsredux.com/blog/archives/</loc>
-        <lastmod>2013-11-12T18:13:35+02:00</lastmod>
+        <lastmod>2013-12-31T14:17:18+02:00</lastmod>
     </url>
     <url>
         <loc>http://emacsredux.com/</loc>
-        <lastmod>2013-11-12T18:13:35+02:00</lastmod>
+        <lastmod>2013-12-31T14:17:18+02:00</lastmod>
     </url>
     <url>
         <loc>http://emacsredux.com/robots.txt</loc>

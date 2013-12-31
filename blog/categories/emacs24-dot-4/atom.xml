@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Emacs24.4 | Emacs Redux]]></title>
+  <link href="http://emacsredux.com/blog/categories/emacs24-dot-4/atom.xml" rel="self"/>
+  <link href="http://emacsredux.com/"/>
+  <updated>2013-12-31T14:17:48+02:00</updated>
+  <id>http://emacsredux.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[A peek at Emacs 24.4: Smarter show-paren-mode]]></title>
+    <link href="http://emacsredux.com/blog/2013/12/31/a-peek-at-emacs-24-dot-4-smarter-show-paren-mode/"/>
+    <updated>2013-12-31T12:09:00+02:00</updated>
+    <id>http://emacsredux.com/blog/2013/12/31/a-peek-at-emacs-24-dot-4-smarter-show-paren-mode</id>
+    <content type="html"><![CDATA[<p>Some time ago I wrote about
+<a href="http://emacsredux.com/blog/2013/11/01/highlight-matching-delimiters-with-smartparens/">highlighting matching delimiters with show-smartparens-mode</a>. In
+Emacs 24.4, the built-in <code>show-paren-mode</code> is capable of highlighting
+more complex paired delimiters as well (like <code>do/end</code> in Ruby for
+instance). There is one limitation to <code>show-paren-mode</code> (compared to
+<code>show-smartparens-mode</code>) - it requires that the major mode is
+implemented in terms of the new SMIE (Simple Minded Indentation
+Engine). Prior to Emacs 24.4 very few built-in modes were using it
+(and just about no third-party major modes). In Emacs 24.4, however, a lot of modes
+were updated to use SMIE (like <code>ruby-mode</code>), so you'll be able to
+enjoy the <code>show-paren-mode</code> improvement with them.</p>
+
+<p>Here's a glimpse of the enhanced <code>show-paren-mode</code> in action:</p>
+
+<p><img src="/images/articles/show-paren-mode.gif"></p>
+
+<p>Long term, I still think that betting on <code>smartparens-mode</code> is a good idea, but if
+you prefer to stick with built-in modules - <code>show-paren-mode</code> is now more capable than ever.</p>
+]]></content>
+  </entry>
+  
+</feed>

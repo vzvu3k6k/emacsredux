@@ -9,9 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="When writing code from time to time we have to write comments as
-well. Most of the time programmers are using single-line comments,
-denoted by some &hellip;">
+  <meta name="description" content="This post continues a topic that was introduced in
+smarter open-line few months
+back. Often when editing code one wishes to open a line just above &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,168 @@ denoted by some &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/15/open-line-above/">Open Line Above</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-15T09:04:00+03:00" pubdate data-updated="true">Jun 15<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/06/15/open-line-above/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This post continues a topic that was introduced in
+<a href="/blog/2013/03/26/smarter-open-line/">smarter open-line</a> few months
+back.</p>
+
+<p>Often when editing code one wishes to open a line just above the
+current one, which is properly indented relative to the existing code,
+and position the cursor at its beginning.  Such a feature is present
+in most IDEs, such as IntelliJ IDEA, Eclipse and NetBeans. It’s
+sometimes bound to <code>Control+Shift+Enter</code>. Last time I showed you how
+to implement a similar function called <code>smart-open-line</code>, this time
+will implement <code>smart-open-line-above</code>. Just add this snippet to your
+<code>.emacs</code> (or <code>.emacs.d/init.el</code> or whatever):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">smart-open-line-above</span> <span class="p">()</span>
+</span><span class='line'>  <span class="s">&quot;Insert an empty line above the current line.</span>
+</span><span class='line'><span class="s">Position the cursor at it&#39;s beginning, according to the current mode.&quot;</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">move-beginning-of-line</span> <span class="no">nil</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">newline-and-indent</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">forward-line</span> <span class="mi">-1</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">indent-according-to-mode</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="nv">[</span><span class="p">(</span><span class="nv">control</span> <span class="nv">shift</span> <span class="nb">return</span><span class="p">)</span><span class="nv">]</span> <span class="ss">&#39;smart-open-line-above</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Evaluate the code (or restart Emacs) and you&#8217;ll be able to use
+<code>M-x smart-open-line-above</code> or <code>Control+Shift+Enter</code> (aka <code>C-S-return</code>).</p>
+
+<p>Admittedly this keybinding kind of sucks, so here&#8217;s another option for
+you - <code>M-o</code> (used by default as the prefix for some font setting
+commands nobody ever uses) for <code>smart-open-line</code> and <code>M-O</code> for
+<code>smart-open-line-above</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;M-o&quot;</span><span class="p">)</span> <span class="ss">&#39;smart-open-line</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;M-O&quot;</span><span class="p">)</span> <span class="ss">&#39;smart-open-line-above</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Another good option would be to fold the two commands into one and use a
+prefix argument to trigger the opening a new line above the current
+one.</p>
+
+<p>This command is part of
+<a href="https://github.com/bbatsov/prelude">Prelude</a>(it&#8217;s named
+<code>prelude-smart-open-line-above</code> there).</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/13/using-emacs-as-a-database-client/">Using Emacs as a Database Client</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-13T15:15:00+03:00" pubdate data-updated="true">Jun 13<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/06/13/using-emacs-as-a-database-client/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Most people that use Emacs are programmers - that&#8217;s a fact!
+Most programmers have to deal with relational databases - that&#8217;s also a fact!</p>
+
+<p>Programmers often interact with the database they have to use via some
+dedicated client - be it a console or a GUI one. One fairly little
+known fact about Emacs is that it features a mode that wraps around
+terminal database clients, called <code>SQLi</code>. The mode allows you to
+interact with a relational database from the comfort of Emacs. Sure,
+you can run a terminal client like <code>psql</code> directly from <code>ansi-term</code>
+(for instance) as well - but if you&#8217;re using a client with no
+<code>readline</code> support (like the default clients for Oracle and DB2)
+you&#8217;ll certainly appreciate <code>SQLi</code>.</p>
+
+<p>Let&#8217;s play a bit with <code>SQLi</code>. To create a PostgreSQL connection start
+by running <code>M-x sql-postgres</code>. You&#8217;ll be prompted for username, database,
+password and host and then you&#8217;ll be dropped in a buffer dedicated to the
+connection you&#8217;ve specified. Apart from being able to run all sorts of
+SQL in that buffer you&#8217;ll also be able to send to it SQL from <code>.sql</code>
+files you&#8217;re editing in Emacs.</p>
+
+<p>Let&#8217;s see how you can do that in a bit more detail.  First you have to
+associated an SQL file with a connection. While in some <code>.sql</code> file
+execute <code>M-x sql-set-product</code> and type <code>postgres</code>. Afterwards do <code>M-x
+sql-set-sqli-buffer</code> and select the name of the connection buffer you
+want to use (it&#8217;s probably called <code>*SQL*</code> if you have only one
+connection buffer).  Now you&#8217;ll be able to use commands like
+<code>sql-send-region</code> (<code>C-c C-r</code>) from the <code>.sql</code> buffer and the code from
+the region will be executed in the associated connection buffer.</p>
+
+<p>Have a look at the documentation of <code>sql-mode</code> for further details.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -805,173 +967,6 @@ auto-save files in <code>tmp</code> by default.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/04/erase-buffer/">Erase Buffer</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-04T10:44:00+03:00" pubdate data-updated="true">May 4<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/05/04/erase-buffer/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Some Emacs users find themselves wondering what&#8217;s the fastest way to
-erase the contents of a buffer. As you know, I&#8217;m fond of
-<a href="/blog/2013/04/12/delete-selection-on-insert/">delete-selection-mode</a>
-and I find the combination of <code>C-x h</code> (<code>mark-whole-buffer</code>) + inserting
-anything afterwards pretty potent.</p>
-
-<p>Another pretty quick way to erase a buffer would be the built-in
-<code>erase-buffer</code> command. It&#8217;s disabled by default since it&#8217;s considered
-that beginners find it confusing(although I&#8217;m not sure why), so you&#8217;ll
-be prompted to enable it the first time you run <code>M-x
-erase-buffer</code>. Alternative you can simply put this snippet in your
-config:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;; enable erase-buffer command</span>
-</span><span class='line'><span class="p">(</span><span class="nv">put</span> <span class="ss">&#39;erase-buffer</span> <span class="ss">&#39;disabled</span> <span class="no">nil</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You should note that any narrowing restrictions would have no effect
-over <code>erase-buffer</code> and the buffer would be truly empty after invoking
-the command. Conversely - narrowing has an effect over
-<code>mark-whole-buffer</code>.</p>
-
-<p>If you like the command you might want to bind it to some keybinding like <code>C-c E</code>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c E&quot;</span><span class="p">)</span>  <span class="ss">&#39;erase-buffer</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Personally, I rarely need it, so I don&#8217;t bind it to anything.</p>
-
-<p>The <code>erase-buffer</code> command is enabled by default in
-<a href="https://github.com/bbatsov/prelude">Prelude</a>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/04/rename-file-and-buffer/">Rename File and Buffer</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-04T10:30:00+03:00" pubdate data-updated="true">May 4<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/05/04/rename-file-and-buffer/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><em>A few weeks ago I wrote an article called
-<a href="/blog/2013/04/03/delete-file-and-buffer/">&#8220;Delete file and buffer&#8221;</a>. Today
-we&#8217;ll revisit the article in a way, by exploring a pretty similar
-topic - renaming of a file and its associated buffer. I&#8217;ve taken the
-liberty to use pretty much the same wording I used in the
-aforementioned post to spare me the effort of thinking up something
-original.</em></p>
-
-<hr />
-
-<p>From time to time(most often when I refactor code) I need to
-quickly(this removes <code>dired</code> from the equation) rename a file and
-the buffer associated with it. Since most of the files I work with
-are under version control I can just use the tried and true <code>M-x
-vc-rename-file</code>. Unfortunately the command does not act on the current
-file and will prompt you for a file to rename. Looks like we need to
-create a simple wrapper around it to get the job done:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">rename-file-and-buffer</span> <span class="p">()</span>
-</span><span class='line'>  <span class="s">&quot;Rename the current buffer and file it is visiting.&quot;</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">filename</span> <span class="p">(</span><span class="nv">buffer-file-name</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nb">and</span> <span class="nv">filename</span> <span class="p">(</span><span class="nv">file-exists-p</span> <span class="nv">filename</span><span class="p">)))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">message</span> <span class="s">&quot;Buffer is not visiting a file!&quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">new-name</span> <span class="p">(</span><span class="nv">read-file-name</span> <span class="s">&quot;New name: &quot;</span> <span class="nv">filename</span><span class="p">)))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nb">cond</span>
-</span><span class='line'>         <span class="p">((</span><span class="nv">vc-backend</span> <span class="nv">filename</span><span class="p">)</span> <span class="p">(</span><span class="nv">vc-rename-file</span> <span class="nv">filename</span> <span class="nv">new-name</span><span class="p">))</span>
-</span><span class='line'>         <span class="p">(</span><span class="no">t</span>
-</span><span class='line'>          <span class="p">(</span><span class="nb">rename-file</span> <span class="nv">filename</span> <span class="nv">new-name</span> <span class="no">t</span><span class="p">)</span>
-</span><span class='line'>          <span class="p">(</span><span class="nv">set-visited-file-name</span> <span class="nv">new-name</span> <span class="no">t</span> <span class="no">t</span><span class="p">)))))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The wrapper is extra smart and will work on files that are not under
-version control as well! I&#8217;m pretty fond of commands that do what you
-mean instead of throwing errors. Now that we have this neat little
-command we should probably bind it to some each to press keys, like <code>C-c r</code>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c r&quot;</span><span class="p">)</span>  <span class="ss">&#39;rename-file-and-buffer</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>As usual both the command and its keybinding are available in
-<a href="https://github.com/bbatsov/prelude">Prelude</a>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -989,6 +984,14 @@ command we should probably bind it to some each to press keys, like <code>C-c r<
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/12/31/a-peek-at-emacs-24-dot-4-smarter-show-paren-mode/">A peek at Emacs 24.4: Smarter show-paren-mode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/12/31/a-peek-at-emacs-24-dot-4/">A peek at Emacs 24.4</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/11/12/a-crazy-productivity-boost-remap-return-to-control/">A crazy productivity boost: Remap Return to Control</a>
       </li>
     
@@ -998,14 +1001,6 @@ command we should probably bind it to some each to press keys, like <code>C-c r<
     
       <li class="post">
         <a href="/blog/2013/09/27/instant-access-to-your-shell-init-file/">Instant access to your shell init file</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/09/25/removing-key-bindings-from-minor-mode-keymaps/">Removing/Altering key bindings from minor mode keymaps</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/09/24/dired-jump/">Dired Jump</a>
       </li>
     
   </ul>

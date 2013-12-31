@@ -4,7 +4,7 @@
   <title><![CDATA[Emacs Redux]]></title>
   <link href="http://emacsredux.com/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2013-11-12T18:14:31+02:00</updated>
+  <updated>2013-12-31T14:17:48+02:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -12,6 +12,209 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A peek at Emacs 24.4: Smarter show-paren-mode]]></title>
+    <link href="http://emacsredux.com/blog/2013/12/31/a-peek-at-emacs-24-dot-4-smarter-show-paren-mode/"/>
+    <updated>2013-12-31T12:09:00+02:00</updated>
+    <id>http://emacsredux.com/blog/2013/12/31/a-peek-at-emacs-24-dot-4-smarter-show-paren-mode</id>
+    <content type="html"><![CDATA[<p>Some time ago I wrote about
+<a href="http://emacsredux.com/blog/2013/11/01/highlight-matching-delimiters-with-smartparens/">highlighting matching delimiters with show-smartparens-mode</a>. In
+Emacs 24.4, the built-in <code>show-paren-mode</code> is capable of highlighting
+more complex paired delimiters as well (like <code>do/end</code> in Ruby for
+instance). There is one limitation to <code>show-paren-mode</code> (compared to
+<code>show-smartparens-mode</code>) - it requires that the major mode is
+implemented in terms of the new SMIE (Simple Minded Indentation
+Engine). Prior to Emacs 24.4 very few built-in modes were using it
+(and just about no third-party major modes). In Emacs 24.4, however, a lot of modes
+were updated to use SMIE (like <code>ruby-mode</code>), so you&#8217;ll be able to
+enjoy the <code>show-paren-mode</code> improvement with them.</p>
+
+<p>Here&#8217;s a glimpse of the enhanced <code>show-paren-mode</code> in action:</p>
+
+<p><img src="http://emacsredux.com/images/articles/show-paren-mode.gif"></p>
+
+<p>Long term, I still think that betting on <code>smartparens-mode</code> is a good idea, but if
+you prefer to stick with built-in modules - <code>show-paren-mode</code> is now more capable than ever.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A peek at Emacs 24.4]]></title>
+    <link href="http://emacsredux.com/blog/2013/12/31/a-peek-at-emacs-24-dot-4/"/>
+    <updated>2013-12-31T11:07:00+02:00</updated>
+    <id>http://emacsredux.com/blog/2013/12/31/a-peek-at-emacs-24-dot-4</id>
+    <content type="html"><![CDATA[<p>Emacs 24.4 is now feature frozen and its release is (probably) just a
+few months away at this point. This makes it a good time to start
+talking about some of the exciting and not so exciting changes that
+will be introduced in it.</p>
+
+<p>Emacs 24.4 is a special for me, since it&#8217;s the first Emacs release to
+which I contributed code. On a related note - I&#8217;ve tracked its development
+much closer than I used to in previous years and I feel I have lots of interesting
+things to share with you.</p>
+
+<p>In a series of smallish posts I&#8217;ll highlight some of the many new features that are
+coming in 24.4. Keep in mind that since we&#8217;re talking about unreleased code, there&#8217;s
+the chance of changes in the final version of 24.4.</p>
+
+<p>By the way, if you&#8217;re looking for a brief overview of what to expect
+in Emacs 24.4 you might have a look at
+<a href="http://www.masteringemacs.org/articles/2013/12/29/whats-new-in-emacs-24-4/">Mickey Petersen&#8217;s article on the subject</a>.</p>
+
+<p>The first article in the series will be arriving momentarily!</p>
+
+<h2>Articles in the Series</h2>
+
+<ul>
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+  <!-- categories if -->
+
+
+<li><a href="">A peek at Emacs 24.4: Smarter show-paren-mode</a></li>
+  <!-- categories if -->
+ <!-- posts for -->
+</ul>
+
+
+<p><strong>P.S.</strong> Emacs 24.4 is fairly stable at this point, so can start using
+it today. I&#8217;ve been using it exclusively for about half an year now
+and I&#8217;ve rarely come across any issues whatsoever.  If you&#8217;re a Prelude
+user - it is 24.4 compatible.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A crazy productivity boost: Remap Return to Control]]></title>
@@ -1235,110 +1438,6 @@ screen in some uncommon way.</p>
 single keystroke - <code>q</code>. That would delete the help window altogether
 if it was created by the help command, or restore its original
 content if the window existing beforehand and was reused by the help command.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Open line above]]></title>
-    <link href="http://emacsredux.com/blog/2013/06/15/open-line-above/"/>
-    <updated>2013-06-15T09:04:00+03:00</updated>
-    <id>http://emacsredux.com/blog/2013/06/15/open-line-above</id>
-    <content type="html"><![CDATA[<p>This post continues a topic that was introduced in
-<a href="http://emacsredux.com/blog/2013/03/26/smarter-open-line/">smarter open-line</a> few months
-back.</p>
-
-<p>Often when editing code one wishes to open a line just above the
-current one, which is properly indented relative to the existing code,
-and position the cursor at its beginning.  Such a feature is present
-in most IDEs, such as IntelliJ IDEA, Eclipse and NetBeans. It’s
-sometimes bound to <code>Control+Shift+Enter</code>. Last time I showed you how
-to implement a similar function called <code>smart-open-line</code>, this time
-will implement <code>smart-open-line-above</code>. Just add this snippet to your
-<code>.emacs</code> (or <code>.emacs.d/init.el</code> or whatever):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">smart-open-line-above</span> <span class="p">()</span>
-</span><span class='line'>  <span class="s">&quot;Insert an empty line above the current line.</span>
-</span><span class='line'><span class="s">Position the cursor at it&#39;s beginning, according to the current mode.&quot;</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">move-beginning-of-line</span> <span class="no">nil</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">newline-and-indent</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">forward-line</span> <span class="mi">-1</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">indent-according-to-mode</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="nv">[</span><span class="p">(</span><span class="nv">control</span> <span class="nv">shift</span> <span class="nb">return</span><span class="p">)</span><span class="nv">]</span> <span class="ss">&#39;smart-open-line-above</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Evaluate the code (or restart Emacs) and you&#8217;ll be able to use
-<code>M-x smart-open-line-above</code> or <code>Control+Shift+Enter</code> (aka <code>C-S-return</code>).</p>
-
-<p>Admittedly this keybinding kind of sucks, so here&#8217;s another option for
-you - <code>M-o</code> (used by default as the prefix for some font setting
-commands nobody ever uses) for <code>smart-open-line</code> and <code>M-O</code> for
-<code>smart-open-line-above</code>.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;M-o&quot;</span><span class="p">)</span> <span class="ss">&#39;smart-open-line</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;M-O&quot;</span><span class="p">)</span> <span class="ss">&#39;smart-open-line-above</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Another good option would be to fold the two commands into one and use a
-prefix argument to trigger the opening a new line above the current
-one.</p>
-
-<p>This command is part of
-<a href="https://github.com/bbatsov/prelude">Prelude</a>(it&#8217;s named
-<code>prelude-smart-open-line-above</code> there).</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Using Emacs as a database client]]></title>
-    <link href="http://emacsredux.com/blog/2013/06/13/using-emacs-as-a-database-client/"/>
-    <updated>2013-06-13T15:15:00+03:00</updated>
-    <id>http://emacsredux.com/blog/2013/06/13/using-emacs-as-a-database-client</id>
-    <content type="html"><![CDATA[<p>Most people that use Emacs are programmers - that&#8217;s a fact!
-Most programmers have to deal with relational databases - that&#8217;s also a fact!</p>
-
-<p>Programmers often interact with the database they have to use via some
-dedicated client - be it a console or a GUI one. One fairly little
-known fact about Emacs is that it features a mode that wraps around
-terminal database clients, called <code>SQLi</code>. The mode allows you to
-interact with a relational database from the comfort of Emacs. Sure,
-you can run a terminal client like <code>psql</code> directly from <code>ansi-term</code>
-(for instance) as well - but if you&#8217;re using a client with no
-<code>readline</code> support (like the default clients for Oracle and DB2)
-you&#8217;ll certainly appreciate <code>SQLi</code>.</p>
-
-<p>Let&#8217;s play a bit with <code>SQLi</code>. To create a PostgreSQL connection start
-by running <code>M-x sql-postgres</code>. You&#8217;ll be prompted for username, database,
-password and host and then you&#8217;ll be dropped in a buffer dedicated to the
-connection you&#8217;ve specified. Apart from being able to run all sorts of
-SQL in that buffer you&#8217;ll also be able to send to it SQL from <code>.sql</code>
-files you&#8217;re editing in Emacs.</p>
-
-<p>Let&#8217;s see how you can do that in a bit more detail.  First you have to
-associated an SQL file with a connection. While in some <code>.sql</code> file
-execute <code>M-x sql-set-product</code> and type <code>postgres</code>. Afterwards do <code>M-x
-sql-set-sqli-buffer</code> and select the name of the connection buffer you
-want to use (it&#8217;s probably called <code>*SQL*</code> if you have only one
-connection buffer).  Now you&#8217;ll be able to use commands like
-<code>sql-send-region</code> (<code>C-c C-r</code>) from the <code>.sql</code> buffer and the code from
-the region will be executed in the associated connection buffer.</p>
-
-<p>Have a look at the documentation of <code>sql-mode</code> for further details.</p>
 ]]></content>
   </entry>
   
