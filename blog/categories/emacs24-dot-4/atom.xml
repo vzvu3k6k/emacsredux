@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Emacs24.4 | Emacs Redux]]></title>
   <link href="http://emacsredux.com/blog/categories/emacs24-dot-4/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2013-12-31T14:17:48+02:00</updated>
+  <updated>2013-12-31T15:00:11+02:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -23,12 +23,14 @@
 Emacs 24.4, the built-in <code>show-paren-mode</code> is capable of highlighting
 more complex paired delimiters as well (like <code>do/end</code> in Ruby for
 instance). There is one limitation to <code>show-paren-mode</code> (compared to
-<code>show-smartparens-mode</code>) - it requires that the major mode is
-implemented in terms of the new SMIE (Simple Minded Indentation
-Engine). Prior to Emacs 24.4 very few built-in modes were using it
-(and just about no third-party major modes). In Emacs 24.4, however, a lot of modes
-were updated to use SMIE (like <code>ruby-mode</code>), so you'll be able to
-enjoy the <code>show-paren-mode</code> improvement with them.</p>
+<code>show-smartparens-mode</code>) - it requires that the major mode, that it's
+used together with (e.g. <code>ruby-mode</code>), is implemented in terms of the
+new(ish) SMIE (Simple Minded Indentation Engine). SMIE has been around
+since 23.3, but hasn't seen much adoption until quite recently. Prior
+to Emacs 24.4 very few built-in modes were using it (and just about no
+third-party major modes). In Emacs 24.4, however, a lot of modes were
+updated to use SMIE (like <code>ruby-mode</code>), so you'll be able to enjoy the
+<code>show-paren-mode</code> improvement with them.</p>
 
 <p>Here's a glimpse of the enhanced <code>show-paren-mode</code> in action:</p>
 
