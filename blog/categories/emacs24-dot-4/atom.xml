@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Emacs24.4 | Emacs Redux]]></title>
   <link href="http://emacsredux.com/blog/categories/emacs24-dot-4/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2013-12-31T15:00:11+02:00</updated>
+  <updated>2014-01-01T12:18:17+02:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -12,6 +12,34 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A peek at Emacs 24.4: Rectangular selection]]></title>
+    <link href="http://emacsredux.com/blog/2014/01/01/a-peek-at-emacs-24-dot-4-rectangular-selection/"/>
+    <updated>2014-01-01T12:03:00+02:00</updated>
+    <id>http://emacsredux.com/blog/2014/01/01/a-peek-at-emacs-24-dot-4-rectangular-selection</id>
+    <content type="html"><![CDATA[<p>I'm extremely fond of rectangle editing (the ability to select a
+rectangular region and apply editing commands only to it), but I've
+always disliked the fact there was no way to visually highlight the
+exact rectangle region you've currently selected. Let's delete some
+text in a rectangular region (with <code>C-x r d</code>), so you can see where the
+problem lies:</p>
+
+<p><img src="/images/articles/rect-old.gif"></p>
+
+<p>It's not immediately clear where the rectangle bounds are (it's clear
+where the rectangle region starts, but it's not so clear where it
+ends), which is a source of constant confusion for many people.</p>
+
+<p>Emacs 24.4 finally fixed this with the introduction of
+<code>rectangle-mark-mode</code> (bound by default to <code>C-x SPC</code>). Let's see it in
+action:</p>
+
+<p><img src="/images/articles/rect-new.gif"></p>
+
+<p>Perfect!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A peek at Emacs 24.4: Smarter show-paren-mode]]></title>
@@ -37,7 +65,7 @@ updated to use SMIE (like <code>ruby-mode</code>), so you'll be able to enjoy th
 <p><img src="/images/articles/show-paren-mode.gif"></p>
 
 <p>Long term, I still think that betting on <code>smartparens-mode</code> is a good idea, but if
-you prefer to stick with built-in modules - <code>show-paren-mode</code> is now more capable than ever.</p>
+you prefer to stick with built-in modes - <code>show-paren-mode</code> is now more capable than ever.</p>
 ]]></content>
   </entry>
   

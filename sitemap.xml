@@ -294,7 +294,13 @@
         <loc>
             http://emacsredux.com/blog/2013/12/31/a-peek-at-emacs-24-dot-4-smarter-show-paren-mode/
         </loc>
-        <lastmod>2013-12-31T14:59:56+02:00</lastmod>
+        <lastmod>2014-01-01T12:01:36+02:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://emacsredux.com/blog/2014/01/01/a-peek-at-emacs-24-dot-4-rectangular-selection/
+        </loc>
+        <lastmod>2014-01-01T12:17:37+02:00</lastmod>
     </url>
     <url>
         <loc>http://emacsredux.com/about/</loc>
@@ -302,11 +308,11 @@
     </url>
     <url>
         <loc>http://emacsredux.com/blog/archives/</loc>
-        <lastmod>2013-12-31T14:59:56+02:00</lastmod>
+        <lastmod>2014-01-01T12:17:37+02:00</lastmod>
     </url>
     <url>
         <loc>http://emacsredux.com/</loc>
-        <lastmod>2013-12-31T14:59:56+02:00</lastmod>
+        <lastmod>2014-01-01T12:17:37+02:00</lastmod>
     </url>
     <url>
         <loc>http://emacsredux.com/robots.txt</loc>
