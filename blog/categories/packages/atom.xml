@@ -4,7 +4,7 @@
   <title><![CDATA[Category: packages | Emacs Redux]]></title>
   <link href="http://emacsredux.com/blog/categories/packages/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2014-01-18T09:52:10+02:00</updated>
+  <updated>2014-01-18T09:54:20+02:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -30,7 +30,7 @@ how <code>ido-vertical-mode</code> displays the completion candidates:</p>
 <p>Is this better than the regular <code>ido</code>? Depends on your personal
 preference I guess. But it's good to have options, right?</p>
 
-<p>That's for today folks! Until next time.</p>
+<p>That's all for today, folks! Until next time.</p>
 ]]></content>
   </entry>
   
