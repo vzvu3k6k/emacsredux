@@ -4,7 +4,7 @@
   <title><![CDATA[Emacs Redux]]></title>
   <link href="http://emacsredux.com/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2014-01-18T09:47:45+02:00</updated>
+  <updated>2014-01-18T09:52:10+02:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -25,7 +25,7 @@ completion candidates you might want to have a look at
 <p>I won&#8217;t duplicate here the installation instructions, but I&#8217;ll show you
 how <code>ido-vertical-mode</code> displays the completion candidates:</p>
 
-<p><img src="https://github.com/gempesaw/ido-vertical-mode.el/blob/master/screenshot.gif"></p>
+<p><img src="https://raw.github.com/gempesaw/ido-vertical-mode.el/master/screenshot.gif"></p>
 
 <p>Is this better than the regular <code>ido</code>? Depends on your personal
 preference I guess. But it&#8217;s good to have options, right?</p>
