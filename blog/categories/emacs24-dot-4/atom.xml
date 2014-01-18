@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Emacs24.4 | Emacs Redux]]></title>
   <link href="http://emacsredux.com/blog/categories/emacs24-dot-4/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2014-01-01T12:21:02+02:00</updated>
+  <updated>2014-01-18T09:47:45+02:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -12,6 +12,27 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A peek at Emacs 24.4: sRGB colours on OS X]]></title>
+    <link href="http://emacsredux.com/blog/2014/01/11/a-peek-at-emacs-24-dot-4-srgb-colours-on-os-x/"/>
+    <updated>2014-01-11T13:40:00+02:00</updated>
+    <id>http://emacsredux.com/blog/2014/01/11/a-peek-at-emacs-24-dot-4-srgb-colours-on-os-x</id>
+    <content type="html"><![CDATA[<p>A while ago I wrote about a
+<a href="http://emacsredux.com/blog/2013/08/21/color-themes-redux/">colour theme problem specific to OS X</a>.
+Thankfully in Emacs 24.4 the OS X (a.k.a. NS) port of Emacs uses sRGB
+colours by default (at least on OS X Lion (10.7) and newer), so you'll
+no longer need to install Emacs from <code>homebrew</code> (or apply an sRGB
+colour support patch manually). If for some reason you want to stick
+to the colours add this to your Emacs config:</p>
+
+<p><code>cl
+(setq ns-use-srgb-colorspace nil)
+</code></p>
+
+<p>I doubt that anyone would want to do that, but the option is there for those of you who want it.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A peek at Emacs 24.4: Rectangular selection]]></title>
