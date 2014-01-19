@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Emacs24.4 | Emacs Redux]]></title>
   <link href="http://emacsredux.com/blog/categories/emacs24-dot-4/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2014-01-18T09:54:20+02:00</updated>
+  <updated>2014-01-19T09:14:30+02:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -12,6 +12,63 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A peek at Emacs 24.4: auto-indentation by default]]></title>
+    <link href="http://emacsredux.com/blog/2014/01/19/a-peek-at-emacs-24-dot-4-auto-indentation-by-default/"/>
+    <updated>2014-01-19T08:52:00+02:00</updated>
+    <id>http://emacsredux.com/blog/2014/01/19/a-peek-at-emacs-24-dot-4-auto-indentation-by-default</id>
+    <content type="html"><![CDATA[<p>I've written in the past about
+<a href="http://emacsredux.com/blog/2013/03/29/automatic-electric-indentation/">electric-indent-mode</a>,
+which was added in Emacs 24.1. In Emacs 24.4 one of the most prominent
+user visible changes is that it's enabled out-of-the box. That's a
+huge step towards the "modernization" of Emacs and one of the bigger
+changes to the defaults in recent times. Let's review briefly how the
+mode works with a couple of Ruby examples (<code>|</code> signifies the cursor
+position). Without <code>electric-indent-mode</code>:</p>
+
+<p><code>ruby
+def something|
+</code></p>
+
+<p>After you press <code>Return</code> you'll get:</p>
+
+<p><code>ruby
+def something
+|
+</code></p>
+
+<p>With it:</p>
+
+<p><code>ruby
+def something|
+</code></p>
+
+<p>After you press <code>Return</code> you'll get:</p>
+
+<p><code>ruby
+def something
+  |
+</code></p>
+
+<p>Nice, ah?</p>
+
+<p>One problem with <code>electric-indent-mode</code> is that it doesn't play nice
+with some (mostly third-party) modes (<code>yaml-mode</code>, <code>slim-mode</code>,
+etc). I guess the situation will improve over time, but for now you
+can simply disable the mode in such problematic cases:</p>
+
+<p><code>cl
+(add-hook 'yaml-mode-hook (lambda () (electric-indent-local-mode -1)))
+</code></p>
+
+<p>Note that <code>electric-indent-local-mode</code> was introduced in Emacs 24.4.</p>
+
+<p>If you want to make a major mode electric-indent aware, have a look at
+the documentation of <code>electric-indent-functions</code> and
+<code>electric-indent-chars</code>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A peek at Emacs 24.4: sRGB colours on OS X]]></title>

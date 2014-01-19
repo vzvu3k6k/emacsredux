@@ -5,13 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Make use of the Super key - Emacs Redux</title>
+  <title>A peek at Emacs 24.4: auto-indentation by default - Emacs Redux</title>
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Emacs users have a lot of power at their disposal, but in one
-department they are always short - the number of available
-non-complex keybindings that &hellip;">
+  <meta name="description" content="I&#8217;ve written in the past about
+electric-indent-mode,
+which was added in Emacs 24.1. In Emacs 24.4 one of the most prominent
+user visible &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +21,7 @@ non-complex keybindings that &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://emacsredux.com/blog/2013/07/17/make-use-of-the-super-key">
+  <link rel="canonical" href="http://emacsredux.com/blog/2014/01/19/a-peek-at-emacs-24-dot-4-auto-indentation-by-default">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Emacs Redux" type="application/atom+xml">
@@ -84,7 +85,7 @@ non-complex keybindings that &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Make Use of the Super Key</h1>
+      <h1 class="entry-title">A Peek at Emacs 24.4: Auto-indentation by Default</h1>
     
     
       <p class="meta">
@@ -100,7 +101,7 @@ non-complex keybindings that &hellip;">
   
 
 
-<time datetime="2013-07-17T16:16:00+03:00" pubdate data-updated="true">Jul 17<span>th</span>, 2013</time>
+<time datetime="2014-01-19T08:52:00+02:00" pubdate data-updated="true">Jan 19<span>th</span>, 2014</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -109,58 +110,62 @@ non-complex keybindings that &hellip;">
   </header>
 
 
-<div class="entry-content"><p>Emacs users have a lot of power at their disposal, but in one
-department they are always short - the number of available
-non-complex keybindings that they can leverage.</p>
-
-<p>Obviously nobody likes pressing keybindings like <code>C-p C-v k</code> (or
-something like that). One way to get your hands on some extra
-keybindings is to utilize the <code>Super</code> key (it&#8217;s the <code>Windows</code> key on
-Win keyboards and the <code>Command</code> key on Mac keyboards (although most
-people remap <code>Command</code> to <code>Meta</code> and <code>Option</code> to <code>Super</code>)). One great
-thing about <code>Super</code> is that you generally have two of them, which
-makes them touch-typing friend. Since almost no packages use those
-keys you&#8217;re left with plenty of options.</p>
-
-<p><a href="https://github.com/bbatsov/prelude">Prelude</a> defines a bunch of
-global keybindings that use the <code>Super</code> key.</p>
+<div class="entry-content"><p>I&#8217;ve written in the past about
+<a href="http://emacsredux.com/blog/2013/03/29/automatic-electric-indentation/">electric-indent-mode</a>,
+which was added in Emacs 24.1. In Emacs 24.4 one of the most prominent
+user visible changes is that it&#8217;s enabled out-of-the box. That&#8217;s a
+huge step towards the &#8220;modernization&#8221; of Emacs and one of the bigger
+changes to the defaults in recent times. Let&#8217;s review briefly how the
+mode works with a couple of Ruby examples (<code>|</code> signifies the cursor
+position). Without <code>electric-indent-mode</code>:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;; make some use of the Super key</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-d]</span> <span class="ss">&#39;projectile-find-dir</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-e]</span> <span class="ss">&#39;er/expand-region</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-f]</span> <span class="ss">&#39;projectile-find-file</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-g]</span> <span class="ss">&#39;projectile-grep</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-j]</span> <span class="ss">&#39;prelude-top-join-line</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-k]</span> <span class="ss">&#39;prelude-kill-whole-line</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-l]</span> <span class="ss">&#39;goto-line</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-m]</span> <span class="ss">&#39;magit-status</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-o]</span> <span class="ss">&#39;prelude-open-line-above</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-w]</span> <span class="ss">&#39;delete-frame</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-x]</span> <span class="ss">&#39;exchange-point-and-mark</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-p]</span> <span class="ss">&#39;projectile-switch-project</span><span class="p">)</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">something</span><span class="o">|</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>If you find pressing <code>Super</code> comfortable obviously you have the
-potential to add quite a lot more keybindings to this list.</p>
+<p>After you press <code>Return</code> you&#8217;ll get:</p>
 
-<p><strong>P.S.</strong> Some keyboards (notably laptop ones) have a <code>Fn</code> key as well
-  that&#8217;s also usable in Emacs keybindings. Somewhat funny that key is
-  known in Emacs as <code>Hyper</code> (<code>Star Wars</code> fans are undoubtedly adding a
-  <strong>Hyper-Space</strong> keybinding to their setups right about now).</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">something</span>
+</span><span class='line'><span class="o">|</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">something</span><span class="o">|</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After you press <code>Return</code> you&#8217;ll get:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">something</span>
+</span><span class='line'>  <span class="o">|</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nice, ah?</p>
+
+<p>One problem with <code>electric-indent-mode</code> is that it doesn&#8217;t play nice
+with some (mostly third-party) modes (<code>yaml-mode</code>, <code>slim-mode</code>,
+etc). I guess the situation will improve over time, but for now you
+can simply disable the mode in such problematic cases:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;yaml-mode-hook</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">()</span> <span class="p">(</span><span class="nv">electric-indent-local-mode</span> <span class="mi">-1</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that <code>electric-indent-local-mode</code> was introduced in Emacs 24.4.</p>
+
+<p>If you want to make a major mode electric-indent aware, have a look at
+the documentation of <code>electric-indent-functions</code> and
+<code>electric-indent-chars</code>.</p>
 </div>
 
 
@@ -183,12 +188,12 @@ potential to add quite a lot more keybindings to this list.</p>
   
 
 
-<time datetime="2013-07-17T16:16:00+03:00" pubdate data-updated="true">Jul 17<span>th</span>, 2013</time>
+<time datetime="2014-01-19T08:52:00+02:00" pubdate data-updated="true">Jan 19<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/utils/'>Utils</a>
+    <a class='category' href='/blog/categories/emacs24-dot-4/'>Emacs24.4</a>
   
 </span>
 
@@ -197,7 +202,7 @@ potential to add quite a lot more keybindings to this list.</p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://emacsredux.com/blog/2013/07/17/make-use-of-the-super-key/" data-via="bbatsov" data-counturl="http://emacsredux.com/blog/2013/07/17/make-use-of-the-super-key/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://emacsredux.com/blog/2014/01/19/a-peek-at-emacs-24-dot-4-auto-indentation-by-default/" data-via="bbatsov" data-counturl="http://emacsredux.com/blog/2014/01/19/a-peek-at-emacs-24-dot-4-auto-indentation-by-default/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -208,10 +213,8 @@ potential to add quite a lot more keybindings to this list.</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/07/17/advise-multiple-commands-in-the-same-manner/" title="Previous Post: Advise multiple commands in the same manner">&laquo; Advise multiple commands in the same manner</a>
+        <a class="basic-alignment left" href="/blog/2014/01/18/ido-vertical-mode/" title="Previous Post: ido-vertical-mode">&laquo; ido-vertical-mode</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/07/24/highlight-comment-annotations/" title="Next Post: Highlight comment annotations">Highlight comment annotations &raquo;</a>
       
     </p>
   </footer>
@@ -311,8 +314,8 @@ potential to add quite a lot more keybindings to this list.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://emacsredux.com/blog/2013/07/17/make-use-of-the-super-key/';
-        var disqus_url = 'http://emacsredux.com/blog/2013/07/17/make-use-of-the-super-key/';
+        var disqus_identifier = 'http://emacsredux.com/blog/2014/01/19/a-peek-at-emacs-24-dot-4-auto-indentation-by-default/';
+        var disqus_url = 'http://emacsredux.com/blog/2014/01/19/a-peek-at-emacs-24-dot-4-auto-indentation-by-default/';
         var disqus_script = 'embed.js';
       
     (function () {

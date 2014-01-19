@@ -4,7 +4,7 @@
   <title><![CDATA[Emacs Redux]]></title>
   <link href="http://emacsredux.com/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2014-01-18T09:54:20+02:00</updated>
+  <updated>2014-01-19T09:14:30+02:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -12,6 +12,70 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A peek at Emacs 24.4: auto-indentation by default]]></title>
+    <link href="http://emacsredux.com/blog/2014/01/19/a-peek-at-emacs-24-dot-4-auto-indentation-by-default/"/>
+    <updated>2014-01-19T08:52:00+02:00</updated>
+    <id>http://emacsredux.com/blog/2014/01/19/a-peek-at-emacs-24-dot-4-auto-indentation-by-default</id>
+    <content type="html"><![CDATA[<p>I&#8217;ve written in the past about
+<a href="http://emacsredux.com/blog/2013/03/29/automatic-electric-indentation/">electric-indent-mode</a>,
+which was added in Emacs 24.1. In Emacs 24.4 one of the most prominent
+user visible changes is that it&#8217;s enabled out-of-the box. That&#8217;s a
+huge step towards the &#8220;modernization&#8221; of Emacs and one of the bigger
+changes to the defaults in recent times. Let&#8217;s review briefly how the
+mode works with a couple of Ruby examples (<code>|</code> signifies the cursor
+position). Without <code>electric-indent-mode</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">something</span><span class="o">|</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After you press <code>Return</code> you&#8217;ll get:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">something</span>
+</span><span class='line'><span class="o">|</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">something</span><span class="o">|</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After you press <code>Return</code> you&#8217;ll get:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">something</span>
+</span><span class='line'>  <span class="o">|</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nice, ah?</p>
+
+<p>One problem with <code>electric-indent-mode</code> is that it doesn&#8217;t play nice
+with some (mostly third-party) modes (<code>yaml-mode</code>, <code>slim-mode</code>,
+etc). I guess the situation will improve over time, but for now you
+can simply disable the mode in such problematic cases:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;yaml-mode-hook</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">()</span> <span class="p">(</span><span class="nv">electric-indent-local-mode</span> <span class="mi">-1</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that <code>electric-indent-local-mode</code> was introduced in Emacs 24.4.</p>
+
+<p>If you want to make a major mode electric-indent aware, have a look at
+the documentation of <code>electric-indent-functions</code> and
+<code>electric-indent-chars</code>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ido-vertical-mode]]></title>
@@ -287,6 +351,10 @@ in Emacs 24.4 you might have a look at
 <li><a href="http://emacsredux.com/blog/2014/01/11/a-peek-at-emacs-24-dot-4-srgb-colours-on-os-x/">A peek at Emacs 24.4: sRGB colours on OS X</a></li>
   <!-- categories if -->
 
+  <!-- categories if -->
+
+
+<li><a href="http://emacsredux.com/blog/2014/01/19/a-peek-at-emacs-24-dot-4-auto-indentation-by-default/">A peek at Emacs 24.4: auto-indentation by default</a></li>
   <!-- categories if -->
  <!-- posts for -->
 </ul>
@@ -1302,36 +1370,6 @@ the command to get around that limitation:</p>
 </pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;M-g M-c&quot;</span><span class="p">)</span> <span class="ss">&#39;go-to-column</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Locate]]></title>
-    <link href="http://emacsredux.com/blog/2013/07/05/locate/"/>
-    <updated>2013-07-05T18:58:00+03:00</updated>
-    <id>http://emacsredux.com/blog/2013/07/05/locate</id>
-    <content type="html"><![CDATA[<p><code>locate</code> is one extremely popular Unix command that allows you to
-search for files in a pre-built database.</p>
-
-<p>One little know fact is that Emacs provides a wrapper around the
-command you can invoke with <code>M-x locate</code>. You&#8217;ll be prompted to enter
-a search string and you&#8217;ll be presented with a list of matching
-filenames from <code>locate</code>&#8217;s database. Many of <code>dired</code> keybindings are
-available in the results buffer (which will be using <code>locate-mode</code> major mode).</p>
-
-<p>If you&#8217;d like you may change the command invoked by Emacs to supply the
-results by altering the <code>locate-command</code> variable. Here&#8217;s how you can
-start using OSX&#8217;s <code>mdfind</code> (the command-line interface to <code>Spotlight</code>)
-instead of <code>locate</code>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="k">setq</span> <span class="nv">locate-command</span> <span class="s">&quot;mdfind&quot;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Obviously any command that takes a string argument and returns a list
-of files would do here. In all likelihood you&#8217;ll never want to use
-anything other than the default <code>locate</code> command, though.</p>
 ]]></content>
   </entry>
   
