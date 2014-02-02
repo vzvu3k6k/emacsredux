@@ -4,7 +4,7 @@
   <title><![CDATA[Emacs Redux]]></title>
   <link href="http://emacsredux.com/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2014-01-19T09:14:30+02:00</updated>
+  <updated>2014-02-02T10:42:07+02:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -12,6 +12,163 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A peek at Emacs 24.4: hash-table-keys &amp; hash-table-values]]></title>
+    <link href="http://emacsredux.com/blog/2014/02/02/a-peek-at-emacs-24-dot-4-hash-table-keys-and-hash-table-values/"/>
+    <updated>2014-02-02T09:59:00+02:00</updated>
+    <id>http://emacsredux.com/blog/2014/02/02/a-peek-at-emacs-24-dot-4-hash-table-keys-and-hash-table-values</id>
+    <content type="html"><![CDATA[<p>While Emacs has a pretty good hash-table API, two functions were
+rather mysteriously absent from it - <code>hash-table-keys</code> and
+<code>hash-table-values</code> (which would return a list of all keys/values in a
+hash-table).</p>
+
+<p>Many people who needed them simply defined them in their code
+directly (usually in terms of <code>maphash</code>), but that&#8217;s no longer
+necessary in Emacs 24.4, as they are now part of the new built-in
+library <code>subr-x</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;; all functions in the library are defined as inline, so you don&#39;t</span>
+</span><span class='line'><span class="c1">;; need to require the library at runtime</span>
+</span><span class='line'><span class="p">(</span><span class="nv">eval-when-compile</span> <span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;subr-x</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">setq</span> <span class="nv">h</span> <span class="p">(</span><span class="nb">make-hash-table</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nv">puthash</span> <span class="s">&quot;Batman&quot;</span> <span class="s">&quot;Bruce Wayne&quot;</span> <span class="nv">h</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nv">puthash</span> <span class="s">&quot;Spiderman&quot;</span> <span class="s">&quot;Peter Parker&quot;</span> <span class="nv">h</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nv">puthash</span> <span class="s">&quot;Superman&quot;</span> <span class="s">&quot;Clark Kent&quot;</span> <span class="nv">h</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nv">hash-table-keys</span> <span class="nv">h</span><span class="p">)</span>
+</span><span class='line'><span class="c1">; =&gt; (&quot;Batman&quot; &quot;Spiderman&quot; &quot;Superman&quot;)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nv">hash-table-values</span> <span class="nv">h</span><span class="p">)</span>
+</span><span class='line'><span class="c1">; =&gt; (&quot;Bruce Wayne&quot; &quot;Peter Parker&quot; &quot;Clark Kent&quot;)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nice and simple.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A peek at Emacs 24.4: New string manipulation functions]]></title>
+    <link href="http://emacsredux.com/blog/2014/02/02/a-peek-at-emacs-24-dot-4-new-string-manipulation-functions/"/>
+    <updated>2014-02-02T09:29:00+02:00</updated>
+    <id>http://emacsredux.com/blog/2014/02/02/a-peek-at-emacs-24-dot-4-new-string-manipulation-functions</id>
+    <content type="html"><![CDATA[<p>Emacs has often been criticized for failing to provide a more
+extensive string manipulation API (compared to that of programming
+languages like Ruby and Perl, for instance).  As many programs
+(extensions) running on top of it are doing quite a lot of string
+manipulation, having a good string API is important. To compensate the
+lack of certain primitives in Emacs itself a lot of package authors
+are using these days packages like
+<a href="https://github.com/magnars/s.el">s.el</a> or simply adding the string
+functions they need directly to their packages (to reduce the number
+of third-party deps).</p>
+
+<p>In Emacs 24.4 finally the situation is improving. Finally, we&#8217;re getting
+<code>string-suffix-p</code>, which was mysteriously missing even though <code>string-prefix-p</code>
+has been part of Emacs for years:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">string-suffix-p</span> <span class="s">&quot;test&quot;</span> <span class="s">&quot;my_test&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">; =&gt; t</span>
+</span><span class='line'><span class="p">(</span><span class="nv">string-suffix-p</span> <span class="s">&quot;tester&quot;</span> <span class="s">&quot;my_test&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">; =&gt; nil</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>More importantly, Emacs 24.4 ships with a new built-in library called <code>subr-x</code>, which features
+a bunch of other string manipulation functions:</p>
+
+<ul>
+<li><code>string-blank-p</code></li>
+<li><code>string-empty-p</code></li>
+<li><code>string-join</code></li>
+<li><code>string-reverse</code></li>
+<li><code>string-trim-left</code></li>
+<li><code>string-trim-right</code></li>
+<li><code>string-trim</code></li>
+<li><code>string-remove-prefix</code></li>
+<li><code>string-remove-suffix</code></li>
+</ul>
+
+
+<p>Here&#8217;s a brief demo of them in action:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;; all functions in the library are defined as inline, so you don&#39;t</span>
+</span><span class='line'><span class="c1">;; need to require the library at runtime</span>
+</span><span class='line'><span class="p">(</span><span class="nv">eval-when-compile</span> <span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;subr-x</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nv">string-empty-p</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">; =&gt; t</span>
+</span><span class='line'><span class="p">(</span><span class="nv">string-empty-p</span> <span class="s">&quot;  &quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">; =&gt; nil</span>
+</span><span class='line'><span class="p">(</span><span class="nv">string-blank-p</span> <span class="s">&quot;  &quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">; =&gt; 0 (#o0, #x0, ?\C-@)</span>
+</span><span class='line'><span class="p">(</span><span class="nv">string-reverse</span> <span class="s">&quot;Batman&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">; =&gt; &quot;namtaB&quot;</span>
+</span><span class='line'><span class="p">(</span><span class="nv">string-join</span> <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;one&quot;</span> <span class="s">&quot;two&quot;</span> <span class="s">&quot;three&quot;</span><span class="p">))</span>
+</span><span class='line'><span class="c1">; =&gt; &quot;onetwothree&quot;</span>
+</span><span class='line'><span class="p">(</span><span class="nv">string-join</span> <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;one&quot;</span> <span class="s">&quot;two&quot;</span> <span class="s">&quot;three&quot;</span><span class="p">)</span> <span class="s">&quot;,&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">; =&gt; &quot;one,two,three&quot;</span>
+</span><span class='line'><span class="p">(</span><span class="nb">string-trim</span> <span class="s">&quot;   Peter Parker &quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">; =&gt; &quot;Peter Parker&quot;</span>
+</span><span class='line'><span class="p">(</span><span class="nv">string-remove-prefix</span> <span class="s">&quot;Mr. &quot;</span> <span class="s">&quot;Mr. Smith&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">; =&gt; &quot;Smith&quot;</span>
+</span><span class='line'><span class="p">(</span><span class="nv">string-remove-suffix</span> <span class="s">&quot;Smith&quot;</span> <span class="s">&quot;Mr. Smith&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">; =&gt; &quot;Mr. &quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Sure, <code>subr-x</code> is not as extensive as <code>s.el</code> (and will never be), but
+I think that it&#8217;s a big step in the right direction. It&#8217;s likely that
+<code>subr-x</code> will be extended in subsequent Emacs versions and some of the
+functions from it will be promoted to <code>built-in</code>.</p>
+
+<p>That&#8217;s all I have for now. Until next time!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A peek at Emacs 24.4: auto-indentation by default]]></title>
@@ -74,6 +231,12 @@ can simply disable the mode in such problematic cases:</p>
 <p>If you want to make a major mode electric-indent aware, have a look at
 the documentation of <code>electric-indent-functions</code> and
 <code>electric-indent-chars</code>.</p>
+
+<p><strong>P.S.</strong></p>
+
+<p>Dmitry Gutov recently wrote
+<a href="http://dgutov.github.io/blog/2014/01/20/electric-indentation-in-ruby-in-emacs-24-dot-4/">more on the topic</a>
+in the context of <code>ruby-mode</code> in Emacs 24.4.</p>
 ]]></content>
   </entry>
   
@@ -355,6 +518,10 @@ in Emacs 24.4 you might have a look at
 
 
 <li><a href="http://emacsredux.com/blog/2014/01/19/a-peek-at-emacs-24-dot-4-auto-indentation-by-default/">A peek at Emacs 24.4: auto-indentation by default</a></li>
+  <!-- categories if -->
+
+  <!-- categories if -->
+
   <!-- categories if -->
  <!-- posts for -->
 </ul>
@@ -1199,177 +1366,6 @@ potential to add quite a lot more keybindings to this list.</p>
   that&#8217;s also usable in Emacs keybindings. Somewhat funny that key is
   known in Emacs as <code>Hyper</code> (<code>Star Wars</code> fans are undoubtedly adding a
   <strong>Hyper-Space</strong> keybinding to their setups right about now).</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Advise multiple commands in the same manner]]></title>
-    <link href="http://emacsredux.com/blog/2013/07/17/advise-multiple-commands-in-the-same-manner/"/>
-    <updated>2013-07-17T16:15:00+03:00</updated>
-    <id>http://emacsredux.com/blog/2013/07/17/advise-multiple-commands-in-the-same-manner</id>
-    <content type="html"><![CDATA[<p>One of the well known features of
-<a href="https://github.com/bbatsov/prelude">Prelude</a> is that it saves buffers
-with changes in them automatically when you jump between
-windows. This is achieved with several simple <code>defadvice</code>s and without
-going into many details the advice code for that feature might look like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;; automatically save buffers associated with files on buffer switch</span>
-</span><span class='line'><span class="c1">;; and on windows switch</span>
-</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">switch-to-buffer</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">switch-to-buffer-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">other-window</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-up</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-down</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-left</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-right</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ouch - that a lot of redundant code! Luckily we can take care of the
-redundancy by introducing a macro to generate multiple advices with
-the same body:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defmacro</span> <span class="nv">advise-commands</span> <span class="p">(</span><span class="nv">advice-name</span> <span class="nv">commands</span> <span class="k">&amp;rest</span> <span class="nv">body</span><span class="p">)</span>
-</span><span class='line'>  <span class="s">&quot;Apply advice named ADVICE-NAME to multiple COMMANDS.</span>
-</span><span class='line'>
-</span><span class='line'><span class="s">The body of the advice is in BODY.&quot;</span>
-</span><span class='line'>  <span class="o">`</span><span class="p">(</span><span class="k">progn</span>
-</span><span class='line'>     <span class="o">,@</span><span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">command</span><span class="p">)</span>
-</span><span class='line'>                 <span class="o">`</span><span class="p">(</span><span class="nv">defadvice</span> <span class="o">,</span><span class="nv">command</span> <span class="p">(</span><span class="nv">before</span> <span class="o">,</span><span class="p">(</span><span class="nb">intern</span> <span class="p">(</span><span class="nv">concat</span> <span class="p">(</span><span class="nb">symbol-name</span> <span class="nv">command</span><span class="p">)</span> <span class="s">&quot;-&quot;</span> <span class="nv">advice-name</span><span class="p">))</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>                    <span class="o">,@</span><span class="nv">body</span><span class="p">))</span>
-</span><span class='line'>               <span class="nv">commands</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Looks a bit scary, doesn&#8217;t it? But it allows us to reduce the original code down to:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;; advise all window switching functions</span>
-</span><span class='line'><span class="p">(</span><span class="nv">advise-commands</span> <span class="s">&quot;auto-save&quot;</span>
-</span><span class='line'>                 <span class="p">(</span><span class="nv">switch-to-buffer</span> <span class="nv">other-window</span> <span class="nv">windmove-up</span> <span class="nv">windmove-down</span> <span class="nv">windmove-left</span> <span class="nv">windmove-right</span><span class="p">)</span>
-</span><span class='line'>                 <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>macroexpand</code> can show us how the macro gets expanded:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">macroexpand</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">advise-commands</span> <span class="s">&quot;auto-save&quot;</span>
-</span><span class='line'>                 <span class="p">(</span><span class="nv">switch-to-buffer</span> <span class="nv">other-window</span> <span class="nv">windmove-up</span> <span class="nv">windmove-down</span> <span class="nv">windmove-left</span> <span class="nv">windmove-right</span><span class="p">)</span>
-</span><span class='line'>                 <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="k">progn</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">defadvice</span> <span class="nv">switch-to-buffer</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">before</span> <span class="nv">switch-to-buffer-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">defadvice</span> <span class="nv">other-window</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-up</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">before</span> <span class="nv">windmove-up-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-down</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">before</span> <span class="nv">windmove-down-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-left</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">before</span> <span class="nv">windmove-left-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-right</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">before</span> <span class="nv">windmove-right-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Obviously if we want the macro to be truly universal we should factor
-out the hardcoded <code>before</code> and <code>activate</code> <code>defadvice</code> params, but
-that&#8217;s beside the point. The point is that when you need to generate
-some code Emacs Lisp&#8217;s macros have your back.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Go To Column]]></title>
-    <link href="http://emacsredux.com/blog/2013/07/09/go-to-column/"/>
-    <updated>2013-07-09T16:30:00+03:00</updated>
-    <id>http://emacsredux.com/blog/2013/07/09/go-to-column</id>
-    <content type="html"><![CDATA[<p>Almost every Emacs user knows that <code>M-g M-g</code> and <code>M-g g</code> (both bound to
-<code>go-to-line</code>) will take him to the line of his choosing (provided he
-knows the number of the target line, of course).</p>
-
-<p>Surprisingly few Emacs users know that there is a similar way to jump
-to a column by its number - <code>M-g TAB</code> (bound to
-<code>move-to-column</code>). Interactively you cannot jump past the end of the
-line you&#8217;re currently on, but you can always cook your own version of
-the command to get around that limitation:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">go-to-column</span> <span class="p">(</span><span class="nv">column</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span> <span class="s">&quot;nColumn: &quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">move-to-column</span> <span class="nv">column</span> <span class="no">t</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Let&#8217;s bind that to some keycombo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;M-g M-c&quot;</span><span class="p">)</span> <span class="ss">&#39;go-to-column</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

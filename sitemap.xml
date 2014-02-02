@@ -316,7 +316,19 @@
         <loc>
             http://emacsredux.com/blog/2014/01/19/a-peek-at-emacs-24-dot-4-auto-indentation-by-default/
         </loc>
-        <lastmod>2014-01-19T09:14:12+02:00</lastmod>
+        <lastmod>2014-02-02T09:27:46+02:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://emacsredux.com/blog/2014/02/02/a-peek-at-emacs-24-dot-4-new-string-manipulation-functions/
+        </loc>
+        <lastmod>2014-02-02T09:58:08+02:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://emacsredux.com/blog/2014/02/02/a-peek-at-emacs-24-dot-4-hash-table-keys-and-hash-table-values/
+        </loc>
+        <lastmod>2014-02-02T10:41:53+02:00</lastmod>
     </url>
     <url>
         <loc>http://emacsredux.com/about/</loc>
@@ -324,11 +336,11 @@
     </url>
     <url>
         <loc>http://emacsredux.com/blog/archives/</loc>
-        <lastmod>2014-01-19T09:14:12+02:00</lastmod>
+        <lastmod>2014-02-02T10:41:53+02:00</lastmod>
     </url>
     <url>
         <loc>http://emacsredux.com/</loc>
-        <lastmod>2014-01-19T09:14:12+02:00</lastmod>
+        <lastmod>2014-02-02T10:41:53+02:00</lastmod>
     </url>
     <url>
         <loc>http://emacsredux.com/robots.txt</loc>

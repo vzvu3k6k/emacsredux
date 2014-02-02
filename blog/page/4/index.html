@@ -9,8 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="One task that often pops when editing text or code is the need to
-remove some extra whitespace around the point(the cursor). Emacs has your back! &hellip;">
+  <meta name="description" content="Often, while editing, you&#8217;ll want to compress a few lines into
+one. Here&#8217;s a simple example to illustrate the problem at hand. We
+want to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +81,234 @@ remove some extra whitespace around the point(the cursor). Emacs has your back! 
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/30/joining-lines/">Joining Lines</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-30T16:27:00+03:00" pubdate data-updated="true">May 30<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/05/30/joining-lines/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Often, while editing, you&#8217;ll want to compress a few lines into
+one. Here&#8217;s a simple example to illustrate the problem at hand. We
+want to convert this bit of Ruby code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">some_method</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span>
+</span><span class='line'>            <span class="n">arg2</span><span class="p">,</span>
+</span><span class='line'>            <span class="n">arg3</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>into:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">some_method</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="n">arg3</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Doing so is extremely easy. Just go to the last line in the first code
+block and press 3 times <code>M-^</code> (<code>delete-indentation</code>, aliased
+also to <code>join-line</code>).</p>
+
+<p>If you&#8217;re like me and like to join lines from top to bottom - go to
+the first line and press <code>C-u M-^</code> three times. This works, but it is
+kind of hard to press <code>C-u M-^</code> repeatedly, compared to just
+<code>M-^</code>. Let&#8217;s simplify this a bit:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">top-join-line</span> <span class="p">()</span>
+</span><span class='line'>  <span class="s">&quot;Join the current line with the line beneath it.&quot;</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">delete-indentation</span> <span class="mi">1</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Isn&#8217;t this a top way to join lines or what?</p>
+
+<p>Since <code>delete-indentation</code> is bound both to <code>M-^</code> it makes
+sense to use something like <code>C-^</code> for the new command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-^&quot;</span><span class="p">)</span> <span class="ss">&#39;top-join-line</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s mostly a personal preference I guess - feel free to use any other keycombo.</p>
+
+<p>This command is part of
+<a href="https://github.com/bbatsov/prelude">Prelude</a>(it&#8217;s named
+<code>prelude-top-join-line</code> there) and it&#8217;s bound to <code>C-^</code> there.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/22/smarter-navigation-to-the-beginning-of-a-line/">Smarter Navigation to the Beginning of a Line</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-22T17:48:00+03:00" pubdate data-updated="true">May 22<span>nd</span>, 2013</time>
+        
+         | <a href="/blog/2013/05/22/smarter-navigation-to-the-beginning-of-a-line/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In Emacs there are two essential commands when you have to go the
+beginning of a line - <code>move-beginning-of-line</code>(bound to <code>C-a</code>) and
+<code>back-to-indentation</code>(bound to <code>M-m</code>). The first takes you to the
+first column of a line and the latter takes you the first non-whitespace
+character on a line.</p>
+
+<p>Generally, I find <code>back-to-indentation</code> more useful, but occasionally
+it makes sense to go to the real beginning of a line as well. What
+doesn&#8217;t make sense is to have to think all the time what command is
+the most appropriate in a particular situation. Wouldn&#8217;t it be great
+if <code>C-a</code> initially took you to the first non-whitespace char(as
+<code>back-to-indentation</code> does) on a line, and if pressed again took
+you to the actual beginning of the line? It would be! Let&#8217;s get it
+done:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">smarter-move-beginning-of-line</span> <span class="p">(</span><span class="nv">arg</span><span class="p">)</span>
+</span><span class='line'>  <span class="s">&quot;Move point back to indentation of beginning of line.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">Move point to the first non-whitespace character on this line.</span>
+</span><span class='line'><span class="s">If point is already there, move to the beginning of the line.</span>
+</span><span class='line'><span class="s">Effectively toggle between the first non-whitespace character and</span>
+</span><span class='line'><span class="s">the beginning of the line.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">If ARG is not nil or 1, move forward ARG - 1 lines first.  If</span>
+</span><span class='line'><span class="s">point reaches the beginning or end of the buffer, stop there.&quot;</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span> <span class="s">&quot;^p&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">setq</span> <span class="nv">arg</span> <span class="p">(</span><span class="nb">or</span> <span class="nv">arg</span> <span class="mi">1</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">;; Move lines first</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">/=</span> <span class="nv">arg</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">line-move-visual</span> <span class="no">nil</span><span class="p">))</span>
+</span><span class='line'>      <span class="p">(</span><span class="nv">forward-line</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">arg</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">orig-point</span> <span class="p">(</span><span class="nv">point</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">back-to-indentation</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">orig-point</span> <span class="p">(</span><span class="nv">point</span><span class="p">))</span>
+</span><span class='line'>      <span class="p">(</span><span class="nv">move-beginning-of-line</span> <span class="mi">1</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; remap C-a to `smarter-move-beginning-of-line&#39;</span>
+</span><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="nv">[remap</span> <span class="nv">move-beginning-of-line]</span>
+</span><span class='line'>                <span class="ss">&#39;smarter-move-beginning-of-line</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The command will keep toggling between the first non-whitespace char
+and the beginning of the line when invoked.</p>
+
+<p>Here&#8217;s a visual example(<code>|</code> is the cursor):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>This is a short example
+</span><span class='line'>    text|
+</span><span class='line'>    <span class="c"># pressing C-a once</span>
+</span><span class='line'>   |text
+</span><span class='line'>    <span class="c"># pressing C-a again</span>
+</span><span class='line'>|   text
+</span><span class='line'>    <span class="c"># pressing C-a again</span>
+</span><span class='line'>   |text
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This functionality could also be implemented with <code>defadvice</code>, but I tend to avoid their use.</p>
+
+<p><code>smarter-move-beginning-of-line</code> is part of <a href="https://github.com/bbatsov/prelude">Prelude</a>.</p>
+
+<p><strong>P.S.</strong> The credit for this tip goes to <a href="https://github.com/lunaryorn">Sebastian Wiesner</a>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -787,170 +1016,6 @@ hack Emacs Lisp (yet) you probably can do without it.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/28/execute-commands-ninja-style-with-key-chord-mode/">Execute Commands Ninja-style With Key-chord-mode</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-28T08:45:00+03:00" pubdate data-updated="true">Apr 28<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/04/28/execute-commands-ninja-style-with-key-chord-mode/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>One of my bigger problems as an Emacs user is that there <strong>only so
-many good keybindings</strong> available. At some point you&#8217;re out of good
-options, but there are still plenty of commands you&#8217;d rather be able
-to execute faster than you&#8217;d be able to do with <code>M-x command-name</code>.</p>
-
-<p><a href="http://www.emacswiki.org/emacs/key-chord.el">key-chord-mode</a> to the
-rescue! It&#8217;s a pretty handy minor mode which allows you to bind
-commands to keys that should be pressed together or consecutively(with
-little time between the keystrokes - by default 0.3 seconds). This
-gives you some pretty good opportunities to increase your
-productivity. Assuming you&#8217;ve installed the mode somehow, you can start
-playing with it:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;; key chords</span>
-</span><span class='line'><span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;key-chord</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nv">key-chord-define-global</span> <span class="s">&quot;BB&quot;</span> <span class="ss">&#39;iswitchb</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">key-chord-define-global</span> <span class="s">&quot;FF&quot;</span> <span class="ss">&#39;find-file</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">key-chord-define-global</span> <span class="s">&quot;jk&quot;</span> <span class="ss">&#39;beginning-of-buffer</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nv">key-chord-mode</span> <span class="mi">+1</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The examples above illustrate global key-chords. Major mode specific
-key chords are also available.</p>
-
-<p>One should be careful about the key-chord he chooses - it should
-definitely be something you&#8217;re unlikely to type normally. This also
-means that if you&#8217;re writing in Emacs in several languages with common
-letters, key chords that make sense in say English, might not make
-sense in French (for instance). Luckily for me - I write almost
-exclusively in English or some programming language (and Bulgarian and
-English are nothing alike).</p>
-
-<p>One other note - key chords don&#8217;t play very well with
-<code>evil-mode</code>(Emacs&#8217;s vim emulation layer) for obvious reasons. vim is
-kind of key-chord-mode&#8217;s principle inspiration. If you&#8217;re an <code>evil-mode</code> user you
-probably don&#8217;t need key-chord-mode anyways.</p>
-
-<p><a href="https://github.com/bbatsov/prelude">Prelude</a> enables <code>key-chord-mode</code>
-out of the box and makes some creative use of it with <code>jj</code> and <code>JJ</code>
-(which I&#8217;d advise you try out if you didn&#8217;t know about them).</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/28/switch-to-previous-buffer/">Switch to Previous Buffer</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-28T08:43:00+03:00" pubdate data-updated="true">Apr 28<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/04/28/switch-to-previous-buffer/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Jumping between the current buffer and the one you were in before is a
-pretty common task. It&#8217;s also one you can solve in a multitude of
-way - the most popular being simply the use of <code>switch-to-buffer</code> and
-<code>ido-switch-to-buffer</code>. Both commands (which are generally bound to
-<code>C-x b</code>) would suggest to select the previous buffer when you invoke
-them. While this was good enough for me for many years, recently
-<a href="https://github.com/lukerandall">Luke Randall</a> suggested me a neat
-alternative:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">switch-to-previous-buffer</span> <span class="p">()</span>
-</span><span class='line'>  <span class="s">&quot;Switch to previously open buffer.</span>
-</span><span class='line'><span class="s">Repeated invocations toggle between the two most recently open buffers.&quot;</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">switch-to-buffer</span> <span class="p">(</span><span class="nv">other-buffer</span> <span class="p">(</span><span class="nv">current-buffer</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>When you pair this command with a handy
-<a href="/blog/2013/04/28/execute-commands-ninja-style-with-key-chord-mode/">key chord</a>
-it becomes a great performance booster:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">key-chord-define-global</span> <span class="s">&quot;JJ&quot;</span> <span class="ss">&#39;switch-to-previous-buffer</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you&#8217;re not fond of key chords I&#8217;d suggest a good old keybinding instead:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c b&quot;</span><span class="p">)</span> <span class="ss">&#39;switch-to-previous-buffer</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The command and its key chord are part of <a href="https://github.com/bbatsov/prelude">Prelude</a>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -968,6 +1033,14 @@ it becomes a great performance booster:</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/02/02/a-peek-at-emacs-24-dot-4-hash-table-keys-and-hash-table-values/">A peek at Emacs 24.4: hash-table-keys &amp; hash-table-values</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/02/a-peek-at-emacs-24-dot-4-new-string-manipulation-functions/">A peek at Emacs 24.4: New string manipulation functions</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/01/19/a-peek-at-emacs-24-dot-4-auto-indentation-by-default/">A peek at Emacs 24.4: auto-indentation by default</a>
       </li>
     
@@ -977,14 +1050,6 @@ it becomes a great performance booster:</p>
     
       <li class="post">
         <a href="/blog/2014/01/11/a-peek-at-emacs-24-dot-4-srgb-colours-on-os-x/">A peek at Emacs 24.4: sRGB colours on OS X</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/01/a-peek-at-emacs-24-dot-4-rectangular-selection/">A peek at Emacs 24.4: Rectangular selection</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/12/31/a-peek-at-emacs-24-dot-4-smarter-show-paren-mode/">A peek at Emacs 24.4: Smarter show-paren-mode</a>
       </li>
     
   </ul>

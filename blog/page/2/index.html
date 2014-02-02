@@ -9,9 +9,8 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Most Emacs users know that they can start dired (Emacs&#8217;s file
-browser) with M-x dired or C-x d. That would display a prompt in
-the minibuffer &hellip;">
+  <meta name="description" content="A while ago I showed you a way to instantly edit your Emacs init file. Today
+we&#8217;ll adapt the original idea for shell init files like .bashrc &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +80,178 @@ the minibuffer &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/27/instant-access-to-your-shell-init-file/">Instant Access to Your Shell Init File</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-27T11:48:00+03:00" pubdate data-updated="true">Sep 27<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/09/27/instant-access-to-your-shell-init-file/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A while ago I showed you a way to <a href="http://emacsredux.com/blog/2013/05/18/instant-access-to-init-dot-el/">instantly edit your Emacs init file</a>. Today
+we&#8217;ll adapt the original idea for shell init files like <code>.bashrc</code> and <code>.zshrc</code>. The code required is fairly short and simple:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">find-shell-init-file</span> <span class="p">()</span>
+</span><span class='line'>  <span class="s">&quot;Edit the shell init file in another window.&quot;</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">shell</span> <span class="p">(</span><span class="nb">car</span> <span class="p">(</span><span class="nb">reverse</span> <span class="p">(</span><span class="nv">split-string</span> <span class="p">(</span><span class="nv">getenv</span> <span class="s">&quot;SHELL&quot;</span><span class="p">)</span> <span class="s">&quot;/&quot;</span><span class="p">))))</span>
+</span><span class='line'>         <span class="p">(</span><span class="nv">shell-init-file</span> <span class="p">(</span><span class="nb">cond</span>
+</span><span class='line'>                           <span class="p">((</span><span class="nb">string-equal</span> <span class="s">&quot;zsh&quot;</span> <span class="nv">shell</span><span class="p">)</span> <span class="s">&quot;.zshrc&quot;</span><span class="p">)</span>
+</span><span class='line'>                           <span class="p">((</span><span class="nb">string-equal</span> <span class="s">&quot;bash&quot;</span> <span class="nv">shell</span><span class="p">)</span> <span class="s">&quot;.bashrc&quot;</span><span class="p">)</span>
+</span><span class='line'>                           <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="nb">error</span> <span class="s">&quot;Unknown shell&quot;</span><span class="p">)))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">find-file-other-window</span> <span class="p">(</span><span class="nv">expand-file-name</span> <span class="nv">shell-init-file</span> <span class="p">(</span><span class="nv">getenv</span> <span class="s">&quot;HOME&quot;</span><span class="p">)))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The shell init file is deduced from your <code>SHELL</code> env variable. While there are different shell init files for most shell (e.g. <code>.bash_profile</code>, <code>.zshenv</code>, <code>.zprofile</code>), here we&#8217;re assuming you&#8217;re using the most commonly used files. <code>find-file-other-window</code> will
+open the file in a window adjacent to the one you&#8217;re currently in.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c S&quot;</span><span class="p">)</span> <span class="ss">&#39;find-shell-init-file</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>find-shell-init-file</code> is available in
+<a href="https://github.com/bbatsov/prelude">Prelude</a>(but with a <code>prelude-</code>
+prefix).</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/25/removing-key-bindings-from-minor-mode-keymaps/">Removing/Altering Key Bindings From Minor Mode Keymaps</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-25T12:26:00+03:00" pubdate data-updated="true">Sep 25<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/09/25/removing-key-bindings-from-minor-mode-keymaps/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Often minor modes don&#8217;t respect standard keybinding conventions and
+use some user reserved keys (like <code>C-c a</code>). Occasionally two minor
+modes would have conflicting keybindings or a minor mode would
+keybindings conflicting with a major mode. I guess you can imagine
+similar problems. Dealing with them is fairly straight-forward - we
+have to either unbind or rebind the offending binding:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;; remove keybinding</span>
+</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">minor-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c c&quot;</span><span class="p">)</span> <span class="no">nil</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; change keybinding</span>
+</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">minor-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c c&quot;</span><span class="p">)</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c C-c&quot;</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Generally speaking you can use <code>define-key</code> to alter the keymap of a
+major mode as well, but those are rarely offenders when it comes to
+picking appropriate keybindings for their keymaps.</p>
+
+<p>Normally you&#8217;d want to invoke the above code right after the related
+minor (or major) mode is loaded:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">eval-after-load</span> <span class="s">&quot;minor-mode&quot;</span>
+</span><span class='line'>  <span class="o">&#39;</span><span class="p">(</span><span class="nv">define-key</span> <span class="nv">minor-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c c&quot;</span><span class="p">)</span> <span class="no">nil</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Making a minor mode have different keymaps in different major modes is
+tricky, but possible. Here&#8217;s an example that disables some keybindings
+in the minor <code>prelude-mode</code>, that are conflicting with the major
+<code>org-mode</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">my-org-mode-hook</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">oldmap</span> <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">assoc</span> <span class="ss">&#39;prelude-mode</span> <span class="nv">minor-mode-map-alist</span><span class="p">)))</span>
+</span><span class='line'>        <span class="p">(</span><span class="nv">newmap</span> <span class="p">(</span><span class="nv">make-sparse-keymap</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">set-keymap-parent</span> <span class="nv">newmap</span> <span class="nv">oldmap</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">define-key</span> <span class="nv">newmap</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c +&quot;</span><span class="p">)</span> <span class="no">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">define-key</span> <span class="nv">newmap</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c -&quot;</span><span class="p">)</span> <span class="no">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">make-local-variable</span> <span class="ss">&#39;minor-mode-overriding-map-alist</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">push</span> <span class="o">`</span><span class="p">(</span><span class="nv">prelude-mode</span> <span class="o">.</span> <span class="o">,</span><span class="nv">newmap</span><span class="p">)</span> <span class="nv">minor-mode-overriding-map-alist</span><span class="p">))</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;org-mode-hook</span> <span class="ss">&#39;my-org-mode-hook</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -773,235 +944,6 @@ potential to add quite a lot more keybindings to this list.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/17/advise-multiple-commands-in-the-same-manner/">Advise Multiple Commands in the Same Manner</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-17T16:15:00+03:00" pubdate data-updated="true">Jul 17<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/07/17/advise-multiple-commands-in-the-same-manner/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>One of the well known features of
-<a href="https://github.com/bbatsov/prelude">Prelude</a> is that it saves buffers
-with changes in them automatically when you jump between
-windows. This is achieved with several simple <code>defadvice</code>s and without
-going into many details the advice code for that feature might look like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;; automatically save buffers associated with files on buffer switch</span>
-</span><span class='line'><span class="c1">;; and on windows switch</span>
-</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">switch-to-buffer</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">switch-to-buffer-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">other-window</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-up</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-down</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-left</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-right</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ouch - that a lot of redundant code! Luckily we can take care of the
-redundancy by introducing a macro to generate multiple advices with
-the same body:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defmacro</span> <span class="nv">advise-commands</span> <span class="p">(</span><span class="nv">advice-name</span> <span class="nv">commands</span> <span class="k">&amp;rest</span> <span class="nv">body</span><span class="p">)</span>
-</span><span class='line'>  <span class="s">&quot;Apply advice named ADVICE-NAME to multiple COMMANDS.</span>
-</span><span class='line'>
-</span><span class='line'><span class="s">The body of the advice is in BODY.&quot;</span>
-</span><span class='line'>  <span class="o">`</span><span class="p">(</span><span class="k">progn</span>
-</span><span class='line'>     <span class="o">,@</span><span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">command</span><span class="p">)</span>
-</span><span class='line'>                 <span class="o">`</span><span class="p">(</span><span class="nv">defadvice</span> <span class="o">,</span><span class="nv">command</span> <span class="p">(</span><span class="nv">before</span> <span class="o">,</span><span class="p">(</span><span class="nb">intern</span> <span class="p">(</span><span class="nv">concat</span> <span class="p">(</span><span class="nb">symbol-name</span> <span class="nv">command</span><span class="p">)</span> <span class="s">&quot;-&quot;</span> <span class="nv">advice-name</span><span class="p">))</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>                    <span class="o">,@</span><span class="nv">body</span><span class="p">))</span>
-</span><span class='line'>               <span class="nv">commands</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Looks a bit scary, doesn&#8217;t it? But it allows us to reduce the original code down to:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;; advise all window switching functions</span>
-</span><span class='line'><span class="p">(</span><span class="nv">advise-commands</span> <span class="s">&quot;auto-save&quot;</span>
-</span><span class='line'>                 <span class="p">(</span><span class="nv">switch-to-buffer</span> <span class="nv">other-window</span> <span class="nv">windmove-up</span> <span class="nv">windmove-down</span> <span class="nv">windmove-left</span> <span class="nv">windmove-right</span><span class="p">)</span>
-</span><span class='line'>                 <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>macroexpand</code> can show us how the macro gets expanded:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">macroexpand</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">advise-commands</span> <span class="s">&quot;auto-save&quot;</span>
-</span><span class='line'>                 <span class="p">(</span><span class="nv">switch-to-buffer</span> <span class="nv">other-window</span> <span class="nv">windmove-up</span> <span class="nv">windmove-down</span> <span class="nv">windmove-left</span> <span class="nv">windmove-right</span><span class="p">)</span>
-</span><span class='line'>                 <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="k">progn</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">defadvice</span> <span class="nv">switch-to-buffer</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">before</span> <span class="nv">switch-to-buffer-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">defadvice</span> <span class="nv">other-window</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-up</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">before</span> <span class="nv">windmove-up-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-down</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">before</span> <span class="nv">windmove-down-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-left</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">before</span> <span class="nv">windmove-left-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-right</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">before</span> <span class="nv">windmove-right-auto-save</span> <span class="nv">activate</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">prelude-auto-save</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Obviously if we want the macro to be truly universal we should factor
-out the hardcoded <code>before</code> and <code>activate</code> <code>defadvice</code> params, but
-that&#8217;s beside the point. The point is that when you need to generate
-some code Emacs Lisp&#8217;s macros have your back.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/09/go-to-column/">Go to Column</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-09T16:30:00+03:00" pubdate data-updated="true">Jul 9<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/07/09/go-to-column/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Almost every Emacs user knows that <code>M-g M-g</code> and <code>M-g g</code> (both bound to
-<code>go-to-line</code>) will take him to the line of his choosing (provided he
-knows the number of the target line, of course).</p>
-
-<p>Surprisingly few Emacs users know that there is a similar way to jump
-to a column by its number - <code>M-g TAB</code> (bound to
-<code>move-to-column</code>). Interactively you cannot jump past the end of the
-line you&#8217;re currently on, but you can always cook your own version of
-the command to get around that limitation:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">go-to-column</span> <span class="p">(</span><span class="nv">column</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span> <span class="s">&quot;nColumn: &quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">move-to-column</span> <span class="nv">column</span> <span class="no">t</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Let&#8217;s bind that to some keycombo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;M-g M-c&quot;</span><span class="p">)</span> <span class="ss">&#39;go-to-column</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1019,6 +961,14 @@ the command to get around that limitation:</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/02/02/a-peek-at-emacs-24-dot-4-hash-table-keys-and-hash-table-values/">A peek at Emacs 24.4: hash-table-keys &amp; hash-table-values</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/02/a-peek-at-emacs-24-dot-4-new-string-manipulation-functions/">A peek at Emacs 24.4: New string manipulation functions</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/01/19/a-peek-at-emacs-24-dot-4-auto-indentation-by-default/">A peek at Emacs 24.4: auto-indentation by default</a>
       </li>
     
@@ -1028,14 +978,6 @@ the command to get around that limitation:</p>
     
       <li class="post">
         <a href="/blog/2014/01/11/a-peek-at-emacs-24-dot-4-srgb-colours-on-os-x/">A peek at Emacs 24.4: sRGB colours on OS X</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/01/a-peek-at-emacs-24-dot-4-rectangular-selection/">A peek at Emacs 24.4: Rectangular selection</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/12/31/a-peek-at-emacs-24-dot-4-smarter-show-paren-mode/">A peek at Emacs 24.4: Smarter show-paren-mode</a>
       </li>
     
   </ul>

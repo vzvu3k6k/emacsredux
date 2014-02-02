@@ -9,8 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Emacs is packed with an insane amount of cool stuff. With Easter fast
-approaching (I&#8217;m an Orthodox Christian and ours is in the beginning of &hellip;">
+  <meta name="description" content="Emacs does not keep track of recently visited files by default. Sad,
+but true. On a more positive note - it has the feature(courtesy of
+recentf), but &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +81,154 @@ approaching (I&#8217;m an Orthodox Christian and ours is in the beginning of &he
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/05/recently-visited-files/">Recently Visited Files</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-05T14:50:00+03:00" pubdate data-updated="true">Apr 5<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/04/05/recently-visited-files/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Emacs does not keep track of recently visited files by default. Sad,
+but true.  On a more positive note - it has the feature(courtesy of
+<code>recentf</code>), but it&#8217;s simply not enabled out-of-the-box. Let&#8217;s see what
+we can do to change that:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;recentf</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="k">setq</span> <span class="nv">recentf-max-saved-items</span> <span class="mi">200</span>
+</span><span class='line'>      <span class="nv">recentf-max-menu-items</span> <span class="mi">15</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nv">recentf-mode</span> <span class="mi">+1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That wasn&#8217;t that hard. Now Emacs will keep track of the last <code>200</code>
+files we visited and will show the last 15 of them in the <code>File-&gt;Open
+recent</code>(this menu entry is added by <code>recentf</code>) menu. That&#8217;s it.</p>
+
+<p>At this point you&#8217;re probably feeling let down. After all - who uses
+the menu bar in Emacs anyways? Fortunately there is also a command
+named <code>recentf-open-files</code>.  Upon invoking it with <code>M-x
+recentf-open-files</code> you&#8217;ll be presented with a list of all recently
+visited files.</p>
+
+<p>If you&#8217;re an <code>ido</code> user you might prefer to use some command based on
+it instead. Here&#8217;s one:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">recentf-ido-find-file</span> <span class="p">()</span>
+</span><span class='line'>  <span class="s">&quot;Find a recent file using ido.&quot;</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">file</span> <span class="p">(</span><span class="nv">ido-completing-read</span> <span class="s">&quot;Choose recent file: &quot;</span> <span class="nv">recentf-list</span> <span class="no">nil</span> <span class="no">t</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">when</span> <span class="nv">file</span>
+</span><span class='line'>      <span class="p">(</span><span class="nv">find-file</span> <span class="nv">file</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&#8217;d suggest binding whichever command you prefer to either <code>C-c f</code> or
+<code>C-x C-r</code> (bound by default to the infrequently used
+<code>find-file-read-only</code> command):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c f&quot;</span><span class="p">)</span> <span class="ss">&#39;recentf-ido-find-file</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As usual - both the command <code>recentf-ido-find-file</code> and its keybinding
+<code>C-c f</code> are available in
+<a href="https://github.com/bbatsov/prelude">Prelude</a>(obviously <code>recentf</code> is
+enabled there out-of-the-box).</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/05/prog-mode-the-parent-of-all-programming-modes/">Prog-mode: The Parent of All Programming Modes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-05T12:04:00+03:00" pubdate data-updated="true">Apr 5<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/04/05/prog-mode-the-parent-of-all-programming-modes/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>You probably know that major modes in Emacs can derive(inherit)
+functionality from a parent major mode.</p>
+
+<p>Emacs 24.1 introduced <code>prog-mode</code> - a new major mode from which all
+programming modes should be derived. All of the programming modes that
+come bundled with Emacs already inherit it(as do most
+actively maintained third-party modes). Having a common parent for all
+the programming modes allows us to do some pretty neat stuff - like
+setting common behavior for all of them. Here&#8217;s how we can enable
+spell-checking in comments:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;prog-mode-hook</span> <span class="ss">&#39;flyspell-prog-mode</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s all for now. We&#8217;ll discuss <code>flyspell</code> in more detail down the road.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -688,166 +837,6 @@ same of the original.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/29/terminal-at-your-fingertips/">Terminal at Your Fingertips</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-29T15:38:00+02:00" pubdate data-updated="true">Mar 29<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/03/29/terminal-at-your-fingertips/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Most of you probably know that you can run a terminal emulator(or
-simply a shell for that matter) inside Emacs(<code>M-x ansi-term</code>).  This
-is pretty neat on its own, but what I think is even better is to have
-a quick way to jump to a particular terminal buffer reserved for the
-occasional command invocation or two. I achieve this goal with the
-following simple command:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">visit-term-buffer</span> <span class="p">()</span>
-</span><span class='line'>  <span class="s">&quot;Create or visit a terminal buffer.&quot;</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nv">get-buffer</span> <span class="s">&quot;*ansi-term*&quot;</span><span class="p">))</span>
-</span><span class='line'>      <span class="p">(</span><span class="k">progn</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">split-window-sensibly</span> <span class="p">(</span><span class="nv">selected-window</span><span class="p">))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">other-window</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">ansi-term</span> <span class="p">(</span><span class="nv">getenv</span> <span class="s">&quot;SHELL&quot;</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">switch-to-buffer-other-window</span> <span class="s">&quot;*ansi-term*&quot;</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The first time you run the command it will create a new terminal
-buffer based on your <code>SHELL</code> environment variable and display it in a
-window adjacent to the one you&#8217;re working in(in other words - it won&#8217;t
-clobber the window you are currently in). On successive invocations
-the command will simply take you to that existing buffer (it will
-still be displayed in a separate window).</p>
-
-<p>Personally, I find this command extremely useful and therefore I bind
-it to <code>C-c t</code>.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c t&quot;</span><span class="p">)</span> <span class="ss">&#39;visit-term-buffer</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>visit-term-buffer</code> is available in
-<a href="https://github.com/bbatsov/prelude">Prelude</a>(but with a <code>prelude-</code>
-prefix).</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/29/automatic-electric-character-pairing/">Automatic(electric) Character Pairing</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-29T12:38:00+02:00" pubdate data-updated="true">Mar 29<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/03/29/automatic-electric-character-pairing/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When editing text (and source code in particular) we often have to
-deal with characters that are usually paired (like <code>()</code>, <code>[]</code>, <code>{}</code>,
-etc). By default Emacs doesn&#8217;t treat such characters in any special
-manner and that kind of sucks, since it&#8217;s quite easy to misplace a
-closing parenthesis for instance.</p>
-
-<p>While there are several modes that target that particular problem, in
-this post I&#8217;ll showcase just one of them - the built-in(since
-Emacs 24.1) global minor mode <code>electric-pair-mode</code>. Enabling it is trivial:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">electric-pair-mode</span> <span class="mi">+1</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>At this point typing an open parenthesis automatically inserts the
-corresponding closing parenthesis. (Likewise for brackets, etc.)  As
-an added bonus, consider the following scenario(the bar(<code>|</code>)
-represents your cursor):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">some_fun</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="o">|</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Typing a closing parenthesis a this point will not insert a second
-parenthesis, but will simple move the cursor over the existing one,
-keeping the expression correct.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">some_fun</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">)</span><span class="o">|</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Simple, but effective. A little bit down the road we might take a
-looks at some of the (more powerful) alternatives to
-<code>electric-pair-mode</code>.</p>
-
-<p><code>electric-pair-mode</code> is enabled by default in
-<a href="https://github.com/bbatsov/prelude">Prelude</a>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -865,6 +854,14 @@ looks at some of the (more powerful) alternatives to
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/02/02/a-peek-at-emacs-24-dot-4-hash-table-keys-and-hash-table-values/">A peek at Emacs 24.4: hash-table-keys &amp; hash-table-values</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/02/a-peek-at-emacs-24-dot-4-new-string-manipulation-functions/">A peek at Emacs 24.4: New string manipulation functions</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/01/19/a-peek-at-emacs-24-dot-4-auto-indentation-by-default/">A peek at Emacs 24.4: auto-indentation by default</a>
       </li>
     
@@ -874,14 +871,6 @@ looks at some of the (more powerful) alternatives to
     
       <li class="post">
         <a href="/blog/2014/01/11/a-peek-at-emacs-24-dot-4-srgb-colours-on-os-x/">A peek at Emacs 24.4: sRGB colours on OS X</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/01/a-peek-at-emacs-24-dot-4-rectangular-selection/">A peek at Emacs 24.4: Rectangular selection</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/12/31/a-peek-at-emacs-24-dot-4-smarter-show-paren-mode/">A peek at Emacs 24.4: Smarter show-paren-mode</a>
       </li>
     
   </ul>
