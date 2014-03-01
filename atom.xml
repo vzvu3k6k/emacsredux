@@ -4,7 +4,7 @@
   <title><![CDATA[Emacs Redux]]></title>
   <link href="http://emacsredux.com/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2014-02-02T10:42:07+02:00</updated>
+  <updated>2014-03-01T17:42:52+02:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -12,6 +12,101 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A peek at Emacs 24.4: delete-duplicate-lines]]></title>
+    <link href="http://emacsredux.com/blog/2014/03/01/a-peek-at-emacs-24-dot-4-delete-duplicate-lines/"/>
+    <updated>2014-03-01T17:33:00+02:00</updated>
+    <id>http://emacsredux.com/blog/2014/03/01/a-peek-at-emacs-24-dot-4-delete-duplicate-lines</id>
+    <content type="html"><![CDATA[<p>Emacs 24.4 introduces the command <code>delete-duplicate-lines</code>.</p>
+
+<p>By default <code>M-x delete-duplicate-lines</code> will delete all but one copy
+of any identical lines in the region. So assuming this is the region:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>test
+</span><span class='line'>dup
+</span><span class='line'>dup
+</span><span class='line'>one
+</span><span class='line'>two
+</span><span class='line'>one
+</span><span class='line'>three
+</span><span class='line'>one
+</span><span class='line'>test
+</span><span class='line'>five</span></code></pre></td></tr></table></div></figure>
+
+
+<p>it will be reduced to this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>test
+</span><span class='line'>dup
+</span><span class='line'>one
+</span><span class='line'>two
+</span><span class='line'>three
+</span><span class='line'>five</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When the command is invoked with a <code>C-u</code> prefix, it searches backwards
+and keeps the last instance of each repeated line. So this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>test
+</span><span class='line'>dup
+</span><span class='line'>dup
+</span><span class='line'>one
+</span><span class='line'>two
+</span><span class='line'>one
+</span><span class='line'>three
+</span><span class='line'>one
+</span><span class='line'>test
+</span><span class='line'>five</span></code></pre></td></tr></table></div></figure>
+
+
+<p>will become:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>dup
+</span><span class='line'>two
+</span><span class='line'>three
+</span><span class='line'>one
+</span><span class='line'>test
+</span><span class='line'>five</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Identical lines need not be adjacent, unless you&#8217;ve invoked the
+command with a <code>C-u C-u</code> prefix.  When the command is invoked with a
+<code>C-u C-u C-u</code> prefix, it retains repeated blank lines.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A peek at Emacs 24.4: hash-table-keys &amp; hash-table-values]]></title>
@@ -522,6 +617,10 @@ in Emacs 24.4 you might have a look at
 
   <!-- categories if -->
 
+  <!-- categories if -->
+
+
+<li><a href="http://emacsredux.com/blog/2014/03/01/a-peek-at-emacs-24-dot-4-delete-duplicate-lines/">A peek at Emacs 24.4: delete-duplicate-lines</a></li>
   <!-- categories if -->
  <!-- posts for -->
 </ul>
@@ -1306,66 +1405,6 @@ appear outside of the source comments anyways.</p>
 
 <p>As usual <a href="https://github.com/bbatsov/prelude">Prelude</a> users get this
 functionally for free out-of-the-box.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Make use of the Super key]]></title>
-    <link href="http://emacsredux.com/blog/2013/07/17/make-use-of-the-super-key/"/>
-    <updated>2013-07-17T16:16:00+03:00</updated>
-    <id>http://emacsredux.com/blog/2013/07/17/make-use-of-the-super-key</id>
-    <content type="html"><![CDATA[<p>Emacs users have a lot of power at their disposal, but in one
-department they are always short - the number of available
-non-complex keybindings that they can leverage.</p>
-
-<p>Obviously nobody likes pressing keybindings like <code>C-p C-v k</code> (or
-something like that). One way to get your hands on some extra
-keybindings is to utilize the <code>Super</code> key (it&#8217;s the <code>Windows</code> key on
-Win keyboards and the <code>Command</code> key on Mac keyboards (although most
-people remap <code>Command</code> to <code>Meta</code> and <code>Option</code> to <code>Super</code>)). One great
-thing about <code>Super</code> is that you generally have two of them, which
-makes them touch-typing friend. Since almost no packages use those
-keys you&#8217;re left with plenty of options.</p>
-
-<p><a href="https://github.com/bbatsov/prelude">Prelude</a> defines a bunch of
-global keybindings that use the <code>Super</code> key.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;; make some use of the Super key</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-d]</span> <span class="ss">&#39;projectile-find-dir</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-e]</span> <span class="ss">&#39;er/expand-region</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-f]</span> <span class="ss">&#39;projectile-find-file</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-g]</span> <span class="ss">&#39;projectile-grep</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-j]</span> <span class="ss">&#39;prelude-top-join-line</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-k]</span> <span class="ss">&#39;prelude-kill-whole-line</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-l]</span> <span class="ss">&#39;goto-line</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-m]</span> <span class="ss">&#39;magit-status</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-o]</span> <span class="ss">&#39;prelude-open-line-above</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-w]</span> <span class="ss">&#39;delete-frame</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-x]</span> <span class="ss">&#39;exchange-point-and-mark</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nv">define-key</span> <span class="nv">global-map</span> <span class="nv">[?\s-p]</span> <span class="ss">&#39;projectile-switch-project</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you find pressing <code>Super</code> comfortable obviously you have the
-potential to add quite a lot more keybindings to this list.</p>
-
-<p><strong>P.S.</strong> Some keyboards (notably laptop ones) have a <code>Fn</code> key as well
-  that&#8217;s also usable in Emacs keybindings. Somewhat funny that key is
-  known in Emacs as <code>Hyper</code> (<code>Star Wars</code> fans are undoubtedly adding a
-  <strong>Hyper-Space</strong> keybinding to their setups right about now).</p>
 ]]></content>
   </entry>
   

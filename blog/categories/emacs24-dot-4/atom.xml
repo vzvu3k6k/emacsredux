@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Emacs24.4 | Emacs Redux]]></title>
   <link href="http://emacsredux.com/blog/categories/emacs24-dot-4/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2014-02-02T10:42:07+02:00</updated>
+  <updated>2014-03-01T17:42:52+02:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -12,6 +12,73 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A peek at Emacs 24.4: delete-duplicate-lines]]></title>
+    <link href="http://emacsredux.com/blog/2014/03/01/a-peek-at-emacs-24-dot-4-delete-duplicate-lines/"/>
+    <updated>2014-03-01T17:33:00+02:00</updated>
+    <id>http://emacsredux.com/blog/2014/03/01/a-peek-at-emacs-24-dot-4-delete-duplicate-lines</id>
+    <content type="html"><![CDATA[<p>Emacs 24.4 introduces the command <code>delete-duplicate-lines</code>.</p>
+
+<p>By default <code>M-x delete-duplicate-lines</code> will delete all but one copy
+of any identical lines in the region. So assuming this is the region:</p>
+
+<p><code>
+test
+dup
+dup
+one
+two
+one
+three
+one
+test
+five
+</code></p>
+
+<p>it will be reduced to this:</p>
+
+<p><code>
+test
+dup
+one
+two
+three
+five
+</code></p>
+
+<p>When the command is invoked with a <code>C-u</code> prefix, it searches backwards
+and keeps the last instance of each repeated line. So this:</p>
+
+<p><code>
+test
+dup
+dup
+one
+two
+one
+three
+one
+test
+five
+</code></p>
+
+<p>will become:</p>
+
+<p><code>
+dup
+two
+three
+one
+test
+five
+</code></p>
+
+<p>Identical lines need not be adjacent, unless you've invoked the
+command with a <code>C-u C-u</code> prefix.  When the command is invoked with a
+<code>C-u C-u C-u</code> prefix, it retains repeated blank lines.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A peek at Emacs 24.4: auto-indentation by default]]></title>
