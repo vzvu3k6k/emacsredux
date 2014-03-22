@@ -5,11 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Emacs Lisp - Emacs Redux</title>
+  <title>A peek at Emacs 24.4: Focus Hooks - Emacs Redux</title>
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Category: Emacs Lisp">
+  <meta name="description" content="A couple of years ago I
+lamented over the lack of frame focus hooks in Emacs. This
+prohibited us from implemented a feature like IntelliJ IDEA&#8217; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://emacsredux.comblog/categories/emacs-lisp">
+  <link rel="canonical" href="http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-focus-hooks">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Emacs Redux" type="application/atom+xml">
@@ -78,36 +80,116 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Emacs Lisp</h1>
+    
+      <h1 class="entry-title">A Peek at Emacs 24.4: Focus Hooks</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-22T16:05:00+02:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>A couple of years ago I
+<a href="http://batsov.com/articles/2012/03/08/emacs-tip-number-5-save-buffers-automatically-on-buffer-or-window-switch/">lamented over the lack of frame focus hooks in Emacs</a>. This
+prohibited us from implemented a feature like IntelliJ IDEA&#8217;s &#8220;auto-save on
+focus lost&#8221;, which was kind of frustrating as we&#8217;re generally assuming that everything is doable in Emacs!</p>
 
-  
-  <h2>2013</h2>
+<p>All this changes in Emacs 24.4 with the introduction of two new hooks - <code>focus-in-hook</code> and <code>focus-out-hook</code>.
+The first is triggered when the current frame gains focus and the second when the frame loses focus.
+So, if we want to save our active buffer when the Emacs frame loses focus we can simply do it like this:</p>
 
-<article>
-  
-<h1><a href="/blog/2013/03/26/remove-variable-and-function-definitions/">Remove variable &amp; function definitions</a></h1>
-<time datetime="2013-03-26T17:15:00+02:00" pubdate><span class='month'>Mar</span> <span class='day'>26</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/emacs-lisp/'>Emacs Lisp</a></span>
-</footer>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;focus-out-hook</span> <span class="ss">&#39;save-buffer</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p>Or you can go a step further and save all the buffers:</p>
 
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;focus-out-hook</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">()</span> <span class="p">(</span><span class="nv">save-some-buffers</span> <span class="no">t</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I pretty sure you&#8217;ll find other creative ways to apply those new hooks to good use!</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-22T16:05:00+02:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/emacs24-dot-4/'>Emacs24.4</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-focus-hooks/" data-via="bbatsov" data-counturl="http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-focus-hooks/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/03/01/a-peek-at-emacs-24-dot-4-delete-duplicate-lines/" title="Previous Post: A peek at Emacs 24.4: delete-duplicate-lines">&laquo; A peek at Emacs 24.4: delete-duplicate-lines</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -196,7 +278,10 @@
       var disqus_shortname = 'emacsredux';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-focus-hooks/';
+        var disqus_url = 'http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-focus-hooks/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

@@ -4,7 +4,7 @@
   <title><![CDATA[Emacs Redux]]></title>
   <link href="http://emacsredux.com/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2014-03-01T17:42:52+02:00</updated>
+  <updated>2014-03-22T16:15:25+02:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -12,6 +12,36 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A peek at Emacs 24.4: Focus Hooks]]></title>
+    <link href="http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-focus-hooks/"/>
+    <updated>2014-03-22T16:05:00+02:00</updated>
+    <id>http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-focus-hooks</id>
+    <content type="html"><![CDATA[<p>A couple of years ago I
+<a href="http://batsov.com/articles/2012/03/08/emacs-tip-number-5-save-buffers-automatically-on-buffer-or-window-switch/">lamented over the lack of frame focus hooks in Emacs</a>. This
+prohibited us from implemented a feature like IntelliJ IDEA&#8217;s &#8220;auto-save on
+focus lost&#8221;, which was kind of frustrating as we&#8217;re generally assuming that everything is doable in Emacs!</p>
+
+<p>All this changes in Emacs 24.4 with the introduction of two new hooks - <code>focus-in-hook</code> and <code>focus-out-hook</code>.
+The first is triggered when the current frame gains focus and the second when the frame loses focus.
+So, if we want to save our active buffer when the Emacs frame loses focus we can simply do it like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;focus-out-hook</span> <span class="ss">&#39;save-buffer</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or you can go a step further and save all the buffers:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;focus-out-hook</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">()</span> <span class="p">(</span><span class="nv">save-some-buffers</span> <span class="no">t</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I pretty sure you&#8217;ll find other creative ways to apply those new hooks to good use!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A peek at Emacs 24.4: delete-duplicate-lines]]></title>
@@ -621,6 +651,10 @@ in Emacs 24.4 you might have a look at
 
 
 <li><a href="http://emacsredux.com/blog/2014/03/01/a-peek-at-emacs-24-dot-4-delete-duplicate-lines/">A peek at Emacs 24.4: delete-duplicate-lines</a></li>
+  <!-- categories if -->
+
+
+<li><a href="http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-focus-hooks/">A peek at Emacs 24.4: Focus Hooks</a></li>
   <!-- categories if -->
  <!-- posts for -->
 </ul>
@@ -1354,57 +1388,6 @@ Internet, these two handle correctly numbers like <code>-3434</code> and
 <p>Both commands are available in
 <a href="https://github.com/bbatsov/prelude">Prelude</a>(but with a <code>prelude-</code>
 prefix).</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Highlight comment annotations]]></title>
-    <link href="http://emacsredux.com/blog/2013/07/24/highlight-comment-annotations/"/>
-    <updated>2013-07-24T16:15:00+03:00</updated>
-    <id>http://emacsredux.com/blog/2013/07/24/highlight-comment-annotations</id>
-    <content type="html"><![CDATA[<p>Programming code is often filled with comment annotations indicating stuff that should be done in the future.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># REFACTOR: Decouple and clean up this crap.</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># crappy code omitted</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Normally Emacs doesn&#8217;t highlight such comment annotations, unless
-you&#8217;re using some minor mode like
-<a href="https://github.com/lewang/fic-mode/blob/master/fic-mode.el">fic-mode</a>. I find such mode overkill given the fact we can cook a pretty decent solution in just about 5 lines of code:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">font-lock-comment-annotations</span> <span class="p">()</span>
-</span><span class='line'>  <span class="s">&quot;Highlight a bunch of well known comment annotations.</span>
-</span><span class='line'>
-</span><span class='line'><span class="s">This functions should be added to the hooks of major modes for programming.&quot;</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">font-lock-add-keywords</span>
-</span><span class='line'>   <span class="no">nil</span> <span class="o">&#39;</span><span class="p">((</span><span class="s">&quot;\\&lt;\\(FIX\\(ME\\)?\\|TODO\\|OPTIMIZE\\|HACK\\|REFACTOR\\):&quot;</span>
-</span><span class='line'>          <span class="mi">1</span> <span class="nv">font-lock-warning-face</span> <span class="no">t</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;prog-mode-hook</span> <span class="ss">&#39;font-lock-comment-annotations</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And that&#8217;s all there is to it. This code is not perfect, since it
-would highlight <code>FIXME:</code> everywhere in the source code (as opposed to
-only in comments), but it&#8217;s extremely highly unlikely that it&#8217;ll
-appear outside of the source comments anyways.</p>
-
-<p>As usual <a href="https://github.com/bbatsov/prelude">Prelude</a> users get this
-functionally for free out-of-the-box.</p>
 ]]></content>
   </entry>
   

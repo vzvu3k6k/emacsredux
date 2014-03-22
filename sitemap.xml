@@ -337,16 +337,20 @@
         <lastmod>2014-03-01T17:42:20+02:00</lastmod>
     </url>
     <url>
+        <loc>http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-focus-hooks/</loc>
+        <lastmod>2014-03-22T16:15:16+02:00</lastmod>
+    </url>
+    <url>
         <loc>http://emacsredux.com/about/</loc>
         <lastmod>2014-03-01T16:20:58+02:00</lastmod>
     </url>
     <url>
         <loc>http://emacsredux.com/blog/archives/</loc>
-        <lastmod>2014-03-01T17:42:20+02:00</lastmod>
+        <lastmod>2014-03-22T16:15:16+02:00</lastmod>
     </url>
     <url>
         <loc>http://emacsredux.com/</loc>
-        <lastmod>2014-03-01T17:42:20+02:00</lastmod>
+        <lastmod>2014-03-22T16:15:16+02:00</lastmod>
     </url>
     <url>
         <loc>http://emacsredux.com/robots.txt</loc>
