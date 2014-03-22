@@ -5,13 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Delete selection on insert - Emacs Redux</title>
+  <title>A peek at Emacs 24.4: Variadic Numeric Comparison Functions - Emacs Redux</title>
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="It most text editors if you select a piece of text and press any
-key(that&#8217;s not bound to some command) the selection would be replaced
-by the &hellip;">
+  <meta name="description" content="In most Lisps numeric comparison functions like =, &lt;, &gt;, &lt;=
+and &gt;= are variadic - meaning they accept variable number of arguments (as do &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +19,7 @@ by the &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://emacsredux.com/blog/2013/04/12/delete-selection-on-insert">
+  <link rel="canonical" href="http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-variadic-comparison-functions">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Emacs Redux" type="application/atom+xml">
@@ -84,7 +83,7 @@ by the &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Delete Selection on Insert</h1>
+      <h1 class="entry-title">A Peek at Emacs 24.4: Variadic Numeric Comparison Functions</h1>
     
     
       <p class="meta">
@@ -100,7 +99,7 @@ by the &hellip;">
   
 
 
-<time datetime="2013-04-12T11:57:00+03:00" pubdate data-updated="true">Apr 12<span>th</span>, 2013</time>
+<time datetime="2014-03-22T16:48:00+02:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2014</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -109,27 +108,34 @@ by the &hellip;">
   </header>
 
 
-<div class="entry-content"><p>It most text editors if you select a piece of text and press any
-key(that&#8217;s not bound to some command) the selection would be replaced
-by the character bound to the key(or deleted if you press
-<code>Backspace</code>).  In Emacs things look differently - by default typed
-text is just inserted at point, regardless of any selection.</p>
-
-<p>Of course, there is a way to change this:</p>
+<div class="entry-content"><p>In most Lisps numeric comparison functions like <code>=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>
+and <code>&gt;=</code> are variadic - meaning they accept variable number of arguments (as do functions like <code>+</code>, <code>-</code>, <code>*</code>, etc).
+Here&#8217;s an example:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">delete-selection-mode</span> <span class="mi">+1</span><span class="p">)</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;; let&#39;s assume that all those are numeric variables</span>
+</span><span class='line'><span class="p">(</span><span class="nb">=</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">z</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nb">&lt;</span> <span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span> <span class="nv">d</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now when <code>transient-mark-mode</code> is also enabled(it is enabled by
-default since Emacs 23) any typed text replaces the selection if the
-selection is active.</p>
+<p>This is pretty cool and save you from writing code like:</p>
 
-<p>Personally I find this behavior more useful than the default
-one. That&#8217;s why it should be no surprise that <code>delete-selection-mode</code>
-is enabled by default in
-<a href="https://github.com/bbatsov/prelude">Prelude</a>.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">y</span> <span class="nv">z</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">a</span> <span class="nv">b</span><span class="p">)</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">)</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">c</span> <span class="nv">d</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Prefix function position for the win!</p>
+
+<p>In Emacs Lisp, however, all these comparison functions (unlike <code>+</code>, <code>-</code>, etc)
+accept just two arguments, which is somewhat unlispy. Luckily this is
+one of the things that&#8217;s going to change with Emacs 24.4.
+Emacs Lisp takes another small step to becoming a good Lisp dialect!</p>
 </div>
 
 
@@ -152,12 +158,12 @@ is enabled by default in
   
 
 
-<time datetime="2013-04-12T11:57:00+03:00" pubdate data-updated="true">Apr 12<span>th</span>, 2013</time>
+<time datetime="2014-03-22T16:48:00+02:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/editing/'>Editing</a>
+    <a class='category' href='/blog/categories/emacs24-dot-4/'>Emacs24.4</a>
   
 </span>
 
@@ -166,7 +172,7 @@ is enabled by default in
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://emacsredux.com/blog/2013/04/12/delete-selection-on-insert/" data-via="bbatsov" data-counturl="http://emacsredux.com/blog/2013/04/12/delete-selection-on-insert/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-variadic-comparison-functions/" data-via="bbatsov" data-counturl="http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-variadic-comparison-functions/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -177,10 +183,8 @@ is enabled by default in
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/04/09/kill-whole-line/" title="Previous Post: Kill whole line">&laquo; Kill whole line</a>
+        <a class="basic-alignment left" href="/blog/2014/03/22/a-peek-at-emacs-24-dot-4-focus-hooks/" title="Previous Post: A peek at Emacs 24.4: Focus Hooks">&laquo; A peek at Emacs 24.4: Focus Hooks</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/04/18/evaluate-emacs-lisp-in-the-minibuffer/" title="Next Post: Evaluate Emacs Lisp in the minibuffer">Evaluate Emacs Lisp in the minibuffer &raquo;</a>
       
     </p>
   </footer>
@@ -280,8 +284,8 @@ is enabled by default in
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://emacsredux.com/blog/2013/04/12/delete-selection-on-insert/';
-        var disqus_url = 'http://emacsredux.com/blog/2013/04/12/delete-selection-on-insert/';
+        var disqus_identifier = 'http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-variadic-comparison-functions/';
+        var disqus_url = 'http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-variadic-comparison-functions/';
         var disqus_script = 'embed.js';
       
     (function () {

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Emacs24.4 | Emacs Redux]]></title>
   <link href="http://emacsredux.com/blog/categories/emacs24-dot-4/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2014-03-22T16:15:25+02:00</updated>
+  <updated>2014-03-22T17:02:35+02:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A peek at Emacs 24.4: Variadic Numeric Comparison Functions]]></title>
+    <link href="http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-variadic-comparison-functions/"/>
+    <updated>2014-03-22T16:48:00+02:00</updated>
+    <id>http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-variadic-comparison-functions</id>
+    <content type="html"><![CDATA[<p>In most Lisps numeric comparison functions like <code>=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>
+and <code>&gt;=</code> are variadic - meaning they accept variable number of arguments (as do functions like <code>+</code>, <code>-</code>, <code>*</code>, etc).
+Here's an example:</p>
+
+<p><code>cl
+;; let's assume that all those are numeric variables
+(= x y z)
+(&lt; a b c d)
+</code></p>
+
+<p>This is pretty cool and save you from writing code like:</p>
+
+<p><code>cl
+(and (= x y) (= y z))
+(and (&lt; a b) (&lt; b c) (&lt; c d))
+</code></p>
+
+<p>Prefix function position for the win!</p>
+
+<p>In Emacs Lisp, however, all these comparison functions (unlike <code>+</code>, <code>-</code>, etc)
+accept just two arguments, which is somewhat unlispy. Luckily this is
+one of the things that's going to change with Emacs 24.4.
+Emacs Lisp takes another small step to becoming a good Lisp dialect!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A peek at Emacs 24.4: Focus Hooks]]></title>
@@ -189,34 +220,6 @@ to the colours add this to your Emacs config:</p>
 </code></p>
 
 <p>I doubt that anyone would want to do that, but the option is there for those of you who want it.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[A peek at Emacs 24.4: Rectangular selection]]></title>
-    <link href="http://emacsredux.com/blog/2014/01/01/a-peek-at-emacs-24-dot-4-rectangular-selection/"/>
-    <updated>2014-01-01T12:03:00+02:00</updated>
-    <id>http://emacsredux.com/blog/2014/01/01/a-peek-at-emacs-24-dot-4-rectangular-selection</id>
-    <content type="html"><![CDATA[<p>I'm extremely fond of rectangle editing (the ability to select a
-rectangular region and apply editing commands only to it), but I've
-always disliked the fact there was no way to visually highlight the
-exact rectangle region you've currently selected. Let's delete some
-text in a rectangular region (with <code>C-x r d</code>), so you can see where the
-problem lies:</p>
-
-<p><img src="/images/articles/rect-old.gif"></p>
-
-<p>It's not immediately clear where the rectangle bounds are (it's clear
-where the rectangle region starts, but it's not so clear where it
-ends), which is a source of constant confusion for many people.</p>
-
-<p>Emacs 24.4 finally fixed this with the introduction of
-<code>rectangle-mark-mode</code> (bound by default to <code>C-x SPC</code>). Let's see it in
-action:</p>
-
-<p><img src="/images/articles/rect-new.gif"></p>
-
-<p>Perfect!</p>
 ]]></content>
   </entry>
   
