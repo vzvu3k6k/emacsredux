@@ -5,11 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Emacs Lisp - Emacs Redux</title>
+  <title>which-function-mode - Emacs Redux</title>
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Category: Emacs Lisp">
+  <meta name="description" content="Every developer is sometimes in the following situation - you&#8217;re
+inside the definition of something like a class or method, but the
+name of the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://emacsredux.comblog/categories/emacs-lisp">
+  <link rel="canonical" href="http://emacsredux.com/blog/2014/04/05/which-function-mode">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Emacs Redux" type="application/atom+xml">
@@ -78,36 +80,154 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Emacs Lisp</h1>
+    
+      <h1 class="entry-title">Which-function-mode</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-05T15:33:00+03:00" pubdate data-updated="true">Apr 5<span>th</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>Every developer is sometimes in the following situation - you&#8217;re
+inside the definition of something like a class or method, but the
+name of the class or method is not currently into view, but you&#8217;d very
+much like to know/see it. You can obviously scroll up and see what you
+need to, but there&#8217;s a simpler way to see the name you&#8217;re looking
+for - the built-in mode <code>which-function-mode</code>.</p>
 
-  
-  <h2>2013</h2>
+<p>When <code>which-function-mode</code> is active you&#8217;ll see in the center of your
+modeline the name of the definition your cursor is currently in.
+Here&#8217;s the mode in action:</p>
 
-<article>
-  
-<h1><a href="/blog/2013/03/26/remove-variable-and-function-definitions/">Remove variable &amp; function definitions</a></h1>
-<time datetime="2013-03-26T17:15:00+02:00" pubdate><span class='month'>Mar</span> <span class='day'>26</span> <span class='year'>2013</span></time>
+<p><img src="/images/articles/which-func-modeline.png"></p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/emacs-lisp/'>Emacs Lisp</a></span>
-</footer>
+<p>And here&#8217;s how to enable it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">which-function-mode</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p>That way <code>which-function-mode</code> will be active in all major modes that
+support it. If you want to enable it only in specific modes you can do
+so like this:</p>
 
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;which-func-modes</span> <span class="ss">&#39;ruby-mode</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;which-func-modes</span> <span class="ss">&#39;emacs-lisp-mode</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And what if you don&#8217;t like to have the definition name displayed in
+the mode-line? There&#8217;s a solution for you as well (suggested by
+<a href="http://www.lunaryorn.com/">Sebastian Wiesner</a>. Use the following bit
+of code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;; Show the current function name in the header line</span>
+</span><span class='line'><span class="p">(</span><span class="nv">which-function-mode</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nv">setq-default</span> <span class="nv">header-line-format</span>
+</span><span class='line'>              <span class="o">&#39;</span><span class="p">((</span><span class="nv">which-func-mode</span> <span class="p">(</span><span class="s">&quot;&quot;</span> <span class="nv">which-func-format</span> <span class="s">&quot; &quot;</span><span class="p">))))</span>
+</span><span class='line'><span class="p">(</span><span class="k">setq</span> <span class="nv">mode-line-misc-info</span>
+</span><span class='line'>            <span class="c1">;; We remove Which Function Mode from the mode line, because it&#39;s mostly</span>
+</span><span class='line'>            <span class="c1">;; invisible here anyway.</span>
+</span><span class='line'>            <span class="p">(</span><span class="nv">assq-delete-all</span> <span class="ss">&#39;which-func-mode</span> <span class="nv">mode-line-misc-info</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And you&#8217;ll get the following result:</p>
+
+<p><img src="/images/articles/which-func-header.png"></p>
+
+<p>That&#8217;s all for today, folks! Hack Emacs Lisp &amp; proper!</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-05T15:33:00+03:00" pubdate data-updated="true">Apr 5<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/utilities/'>Utilities</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://emacsredux.com/blog/2014/04/05/which-function-mode/" data-via="bbatsov" data-counturl="http://emacsredux.com/blog/2014/04/05/which-function-mode/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/03/22/a-peek-at-emacs-24-dot-4-variadic-comparison-functions/" title="Previous Post: A peek at Emacs 24.4: Variadic Numeric Comparison Functions">&laquo; A peek at Emacs 24.4: Variadic Numeric Comparison Functions</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -196,7 +316,10 @@
       var disqus_shortname = 'emacsredux';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://emacsredux.com/blog/2014/04/05/which-function-mode/';
+        var disqus_url = 'http://emacsredux.com/blog/2014/04/05/which-function-mode/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
