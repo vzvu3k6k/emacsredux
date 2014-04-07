@@ -4,7 +4,7 @@
   <title><![CDATA[Emacs Redux]]></title>
   <link href="http://emacsredux.com/atom.xml" rel="self"/>
   <link href="http://emacsredux.com/"/>
-  <updated>2014-04-07T11:26:39+03:00</updated>
+  <updated>2014-04-07T11:43:15+03:00</updated>
   <id>http://emacsredux.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -46,6 +46,16 @@ so like this:</p>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;which-func-modes</span> <span class="ss">&#39;ruby-mode</span><span class="p">)</span>
 </span><span class='line'><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;which-func-modes</span> <span class="ss">&#39;emacs-lisp-mode</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By default <code>???</code> will be displayed when <code>which-function-mode</code> cannot
+determine the name (perhaps because you&#8217;re not actually in a
+definition or due to implementation limitations). You can change this
+to something else like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="k">setq</span> <span class="nv">which-func-unknown</span> <span class="s">&quot;n/a&quot;</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
